@@ -1,0 +1,173 @@
+---
+title: "Bibliometrico socio y humanidades sobre big data"
+author: "gaston becerra"
+date: "20/5/2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = '', fig.width = 6, fig.height = 6
+  )
+
+options(scipen = 999)
+
+library(tidyverse)
+library(igraph)
+library(ggraph)
+library(tidygraph)
+
+metadata <- readr::read_csv(file = "../data/metadata.csv")
+ocr <- readr::read_csv(file = "../data/ocr.csv")
+autores <- readr::read_csv(file = "../data/autores.csv")
+#references1 <- readr::read_csv(file = "../data/scopus_references.csv")
+references <- readRDS(file = "../data/referencias.rds")
+
+```
+
+# Referencias
+
+lo que trajimos de anystyle
+
+```{r message=FALSE, warning=FALSE}
+references <- readRDS(file = "../data/referencias.rds")
+
+library(DataExplorer)
+plot_missing(data = references)
+table(references$CATEGORY)
+
+```
+
+armamos nuestra propia tabla
+
+```{r}
+
+ref <- references %>% 
+  filter(CATEGORY %in% c("ARTICLE","BOOK","INPROCEEDINGS")) %>% 
+  select(AUTHOR, JOURNAL, TITLE, DATE, DOI, BOOKTITLE,id) %>%
+  rowwise() %>% # bajar autores a string
+      mutate(authors = paste(AUTHOR, collapse=', ')) %>%
+      ungroup() %>%
+  mutate(
+    date_anystyle = as.integer(DATE), # fecha parseada por anystyle
+    date_titulo = as.integer(sub("\\D*(\\d{4}).*", "\\1", TITLE)), # fecha del titulo
+  ) %>%
+  mutate(date = case_when(
+    is.na(date_anystyle) & !is.na(date_titulo) ~ date_titulo,
+    is.na(date_titulo) & !is.na(date_anystyle) ~ date_anystyle,
+    !is.na(date_anystyle) & !is.na(date_titulo) ~ date_anystyle,
+    is.na(date_anystyle) & is.na(date_titulo) ~ NA_integer_
+  )) %>% 
+  mutate( ref = paste(
+      str_replace_all(string = authors, pattern = "[^[A-Za-z ,]]", replacement = ""),
+      date,
+      str_replace_all(string = TITLE, pattern = "[^[A-Za-z ]]", replacement = "") %>%
+        str_sub(string = ., 1, 20)
+      )
+  ) %>%
+  mutate( ref = trimws(tolower(ref)))
+
+glimpse(ref)
+
+# 2do: falta limpiar y borrar los na obvios
+
+```
+cantidad de referencias??? 
+
+```{r}
+ref %>% count(ref) %>% count(n, sort = TRUE) %>% plot()
+```
+
+## citas x año x articulos
+
+What is the average number of citations/publications?
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ref %>% 
+  left_join(
+    metadata %>% # citas por año
+    filter(tag=="year") %>%
+    select(id,year=value)) %>% 
+    mutate(year=as.integer(year)
+  ) %>%
+  count(year, name = 'references') %>%
+  ungroup() %>%
+  left_join(
+    metadata %>% # articulos por año
+    filter(tag=="year") %>%
+    select(id,year=value) %>% 
+    mutate(year=as.integer(year)) %>%
+             count(year, name = 'articulos')
+  ) %>%
+  mutate(
+    ref_art = references / articulos
+  )
+
+```
+
+
+## Articulos más influyentes (+citas)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ref %>% 
+  count(ref,sort = TRUE) %>% head()
+
+```
+
+### publications in the selected time frame
+
+**2do: calcular**
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+
+```
+
+
+### Top cited publications for each year
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+ref %>% 
+    left_join(
+      metadata %>% 
+      filter(tag=="year") %>%
+      select(id,year=value)) %>% 
+      mutate(year=as.integer(year)
+    ) %>%
+    group_by(year,ref) %>%
+    summarise(n=n()) %>%
+    filter(n>1) %>%
+    slice_max(order_by = n, n = 5, with_ties = FALSE) %>%
+  ggplot(aes(y=n,x=ref)) + geom_col() + facet_wrap(~year) + coord_flip()
+
+```
+
+### Top 10 publications by normalized score
+
+**2do: calcular**
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+```
+
+
+# referencias por topicos (ya sea x tm o keywords)
+
+**2do: calcular**
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+```
+

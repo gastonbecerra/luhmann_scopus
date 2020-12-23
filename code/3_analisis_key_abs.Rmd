@@ -1,0 +1,318 @@
+---
+title: "Bibliometrico socio y humanidades sobre big data"
+author: "gaston becerra"
+date: "20/5/2020"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  comment = '', fig.width = 6, fig.height = 6
+  )
+
+options(scipen = 999)
+
+library(tidyverse)
+library(igraph)
+library(ggraph)
+library(tidygraph)
+
+metadata <- readr::read_csv(file = "../data/metadata.csv")
+ocr <- readr::read_csv(file = "../data/ocr.csv")
+autores <- readr::read_csv(file = "../data/autores.csv")
+
+```
+
+## Temas
+
+### Keywords
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+
+keywords <- metadata %>% filter(tag=="keyword")
+
+keywords %>% group_by(value) %>% tally(sort = TRUE) %>% 
+  #filter(value != "big data") %>%
+  filter(n>100) %>% # keywords que se repitan en al menos 25 art
+  # top_n(100) %>% view()
+  ggplot(aes(y=n,x=reorder(value,n))) +
+  geom_col() +
+  coord_flip() 
+
+
+library(wordcloud)
+library(RColorBrewer)
+library(wordcloud2)
+
+print("wordcloud sin big data")
+
+set.seed(1234) # for reproducibility 
+# wordcloud(words = keywords %>% group_by(value) %>% tally(sort = TRUE) %>% pull(value),
+#           freq = keywords %>% group_by(value) %>% tally(sort = TRUE) %>% pull(n), 
+#           min.freq = 1,
+#           max.words=100, random.order=FALSE, rot.per=0.35,
+#           colors=brewer.pal(8, "Dark2"))
+
+wordcloud2(data=keywords %>% count(value, sort = TRUE), size=1.6, color='random-dark')
+
+```
+
+relacioens entre keywords que aparecen mas de 100 veces
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+correlaciones <- keywords %>% 
+  group_by(value) %>% filter(n() > 100) %>% ungroup() %>%  
+  widyr::pairwise_cor(item = value, feature = id, sort = TRUE, method = "pearson") 
+
+corr_graph <- tidygraph::as_tbl_graph(
+  correlaciones %>% filter(correlation>=0.1), # correlaciones arriba de .1
+  directed = FALSE) %>%
+  activate(nodes) %>% 
+  inner_join( keywords %>% group_by(value) %>% tally(), by=c("name"="value") ) 
+
+corr_graph %>% create_layout( layout = "dh") %>%
+  ggraph::ggraph(layout) + 
+  geom_edge_link(aes(width = correlation), alpha = 0.2) + 
+  geom_node_point(aes(size = n)) +
+  geom_node_text(aes(label = name), size = 4, repel = TRUE) +
+  theme_graph() +
+  labs(title = "Keyword correlation network") 
+
+```
+
+mapa semantico de "big data"
+
+esto del mapa semantico es un invento mio. ja.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+campo1 <- correlaciones %>% filter( item1 == "big data" ) %>% 
+  top_n( n=25 , correlation ) %>% select( "item1", "item2" , "correlation" ) 
+campo2 <- correlaciones %>% filter( item2 %in% campo1$item2 , item1 != "big data" ) %>% 
+  top_n( n=100 , correlation ) %>% select( "item1", "item2" , "correlation" ) 
+nodos1 <- campo1 %>% rename( item=item2 ) %>% distinct( item ) 
+nodos2 <- campo2 %>% rename( item=item1 ) %>% distinct( item )
+nodos2b <- dplyr::filter(nodos2, !item %in% intersect(nodos1$item, nodos2$item))      
+if (nrow(nodos1) > 0){ nodos1$nivel=1 }
+if (nrow(nodos2b) > 0){ nodos2b$nivel=2 } 
+nodos<-rbind(nodos1,nodos2b)       
+nodos<-rbind(nodos,c("big data" ,3))
+semnet <- rbind(campo1, campo2) 
+rm(nodos1,nodos2,nodos2b,campo1,campo2,nodos)
+
+semgraph <- tidygraph::as_tbl_graph(semnet, directed = FALSE) %>%
+  activate(nodes) %>% 
+  left_join( keywords %>% group_by(value) %>% tally(), by=c("name"="value") ) 
+
+semgraph %>% create_layout( layout = "gem") %>%
+  ggraph::ggraph(layout) + 
+  geom_edge_link(aes(width = correlation), alpha = 0.2) + 
+  geom_node_point(aes(size = n)) +
+  geom_node_text(aes(label = name), size = 4, repel = TRUE) +
+  theme_graph() +
+  labs(title = "Keyword correlation to 'big data'",
+    subtitle = "1 and 2 degree") 
+
+semgraph %>% 
+  activate(nodes) %>% 
+  mutate(
+    neighbors = centrality_degree(), # cantidad de vecinos
+    centrality = centrality_authority() # centralidad entre vecinos
+  ) %>%
+  # filter(!node_is_isolated()) %>%
+  mutate(
+    # group = group_infomap(trials = 500),
+    group = group_leading_eigen(steps = 100),
+    # group = group_louvain() # ok
+    # group = group_optimal() # ok
+    # group = group_walktrap(steps = 10) 
+  ) %>%
+  create_layout( layout = "gem") %>%
+  ggraph::ggraph(layout) + 
+    geom_edge_link(aes(width = correlation), alpha = 0.1) + 
+    geom_node_point(aes(size = n, color = factor(group))) +
+    geom_node_text(aes(label = name), size = 4, repel = TRUE) +
+    theme_graph() +
+    labs(title = "Keyword correlation to 'big data'",
+         subtitle = "1 and 2 degree") 
+
+rm(semnet,semgraph)
+rm(corr_graph, correlaciones, keywords)
+
+```
+
+### Palabras en abstracts (uni, bi y tri)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidytext)
+library(textstem)
+
+limpiar <- function(txt) {
+  txt <- tolower(txt)
+  txt <- gsub("[^a-z ]","",txt)
+  txt <- gsub("big data","big_data",txt, fixed = TRUE)
+  txt <- gsub("â"," ",txt, fixed = TRUE)
+  txt <- trimws(txt)
+  return(txt)
+}
+
+abstracts <- metadata %>% filter(tag=="abstract") %>%
+  mutate(value=limpiar(value))
+
+tidy_abs <- abstracts %>%
+  select(-tag,-source) %>%
+  unnest_tokens(output = word, input = value) %>%
+  anti_join(stop_words) %>% # remove stopwords
+  mutate(len = str_length(word)) %>% filter(len>2) %>% select(-len) %>% # remove 1-2 char words
+  mutate(word=textstem::lemmatize_words(x = word %>% unlist()))  # lemmatize
+
+tidy_abs %>%
+  count(word, sort = TRUE)
+
+# ngramas de datum y big_data
+
+bigrams <- abstracts %>%
+  select(-tag,-source) %>%
+  unnest_tokens(bigram, value, token = "ngrams", n = 2) %>%
+  separate(bigram, c("word1", "word2"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word) %>% 
+  count(word1, word2, sort = TRUE)
+
+k <- c("big_data", "data")
+bigrams %>% filter( word1 %in% k | word2 %in%  k  )
+
+trigrams <- abstracts %>%
+  select(-tag,-source) %>%
+  unnest_tokens(bigram, value, token = "ngrams", n = 3) %>%
+  separate(bigram, c("word1", "word2", "word3"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word) %>%
+  filter(!word2 %in% stop_words$word) %>%
+  filter(!word3 %in% stop_words$word) %>% 
+  count(word1, word2, word3, sort = TRUE)
+
+trigrams %>% filter( word1 %in% k | word2 %in%  k | word3 %in% k  )
+
+rm(k, bigrams, trigrams)
+
+rm(limpiar)
+
+```
+
+### Topic modelling sobre abstracts
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(quanteda)
+library(stm)
+
+dfm_abs <- tidy_abs %>%
+  count(id, word, sort = TRUE) %>%
+  tidytext::cast_dfm(id, word, n)
+
+dfm_abs_idf <- tidy_abs %>%
+  count(id, word, sort = TRUE) %>%
+  tidytext::bind_tf_idf(tbl = ., document = id, term = word, n = n)
+
+# 2do: tengo que bajar tf_idf a tm
+# https://www.tidytextmining.com/dtm.html
+
+# tm basico con stm + tidy -----------------
+# https://juliasilge.com/blog/sherlock-holmes-stm/
+
+topic_model <- stm(dfm_abs, K = 20, verbose = FALSE, 
+                   init.type = "Spectral", max.em.its = 2)
+
+td_beta <- tidy(topic_model)
+
+td_beta %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  mutate(topic = paste0("Topic ", topic),
+    term = reorder_within(term, beta, topic)) 
+
+td_gamma <- tidy(topic_model, matrix = "gamma", 
+  document_names = rownames(dfm_abs))
+
+library(ggthemes)
+
+top_terms <- td_beta %>%
+  arrange(beta) %>%
+  group_by(topic) %>%
+  top_n(100, beta) %>%
+  arrange(-beta) %>%
+  select(topic, term) %>%
+  summarise(terms = list(term)) %>%
+  mutate(terms = map(terms, paste, collapse = ", ")) %>% 
+  unnest(cols=c(terms))
+
+gamma_terms <- td_gamma %>%
+  group_by(topic) %>%
+  summarise(gamma = mean(gamma)) %>%
+  arrange(desc(gamma)) %>%
+  left_join(top_terms, by = "topic") %>%
+    mutate(topic = paste0("Topic ", topic),
+      topic = reorder(topic, gamma))
+
+gamma_terms %>%
+  #top_n(50, gamma) %>%
+  ggplot(aes(topic, gamma, label = terms, fill = topic)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(hjust = 0, nudge_y = 0.0005 ) +
+  coord_flip() +
+  #scale_y_continuous(expand = c(0,0),
+  #  limits = c(0, 0.09)) +
+  theme_tufte(ticks = FALSE) +
+  theme(plot.title = element_text(size = 16 ),
+    plot.subtitle = element_text(size = 13)) +
+  labs(x = NULL, y = expression(gamma),
+    title = "Top topics by prevalence")
+
+gamma_terms %>%
+  select(topic, gamma, terms) %>%
+  knitr::kable(digits = 3, 
+    col.names = c("Topic", "Expected topic proportion", "Top 7 terms"))
+
+# # cuales son los +terminos de cada topico?
+# gamma_terms %>%
+#   select(topic, gamma, terms)
+# 
+# # cuales son los +docs de cada topico?
+# docs_topico <- td_gamma %>%
+#   group_by(topic) %>%
+#   arrange(desc(gamma)) %>% 
+#   top_n(100)
+# docs_topico
+
+# 2do: falta mismo preprocesamiento a ambas tablas
+# cuales / cuantas palabras del tm estan en los keywords
+# cuantos keywords aparecen sobre el total de palabras x topic?
+# y cuan exclusivos son? ----> esta puede ser la nocion conceptual a explorar?
+
+rm(x)
+
+```
+
+
+tabla de temas con topkeywords
+
+**2do: calcular**
+
+
+
+
+# Tipo de trabajo
+
+### empirico vs. teórico
+
+**2do: calcular / esto va a ser un bardo: es limpiar + entrenar + clasificar**
