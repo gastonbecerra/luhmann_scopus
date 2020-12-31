@@ -71,7 +71,7 @@ To dwell on a few of these:
 
 > "Big data does provide a challenge to the social sciences, but not a particularly new one. It is, in fact, the core challenge of sociology: connecting the micro-connections between individuals to the vast social structures that shape us (and are shaped by us) as a society. Mills famously suggested that this ability to both connect and disconnect the personal with the social was at the core of what he called the ‘sociological imagination’."
 
-In this paper we focus on papers from social sciences, psychology and humanities and arts. We do so in a bibliometric approach that aims at assessing and analyzing in a quantitative manner trends in the publications. Specifically, we are interested in 3 key issues for which bibliometric analysis has proven to be an useful and a valid methodology: (1) Authorship: access to big data is unequal because of costs and skills. This is true for the users and citizens but also within the academic world (McCarthy, 2016). Analyzing authorship is a way to shed some light on these issues. Also, although using co-authorship as proxy for real academic collaboration has been discussed (Ponomariov & Boardman, 2016), it is indeed and interesting metric to explore trends in integration and crossings between nations and types of institutions (e.g., academia and private sector), which are argueably challenges required for big data research; (2) Contents: big data is a trans-disciplinary area of research with no clear taxonomy nor classifications. Analyzing content in a statistical manner can help us gain insights about the different ways in which it is framed and thematized in the different branches of knowledge; (3) Citations: although citation should not be taken as a valid tool to assess the quality of a publication, it is indeed a valuable metric to assess visibility and influence (Eibrahim, 2014). Hence, bibliometrics that draw on citation analysis are useful to identify possible trends and other eigen-values on topics and approaches. Several papers used bibliometric and citations analysis to map the big data scientific production, including these issues (we'll review these in the next section), but to the best of our knowledge, no one has focus on the social sciences and humanities. 
+In this work we focus on literature from social sciences, psychology and humanities & arts. We do so in a bibliometric approach that aims at assessing and analyzing in a quantitative manner trends in the publications. Specifically, we are interested in 3 key issues for which bibliometric analysis has proven to be an useful and a valid methodology: (1) Authorship: access to big data is unequal because of costs and skills. This is true for the users and citizens but also within the academic world (McCarthy, 2016). Analyzing authorship is a way to shed some light on these issues. Also, although using co-authorship as proxy for real academic collaboration has been discussed (Ponomariov & Boardman, 2016), it is indeed and interesting metric to explore trends in integration and crossings between nations and types of institutions (e.g., academia and private sector), which are argueably challenges required for big data research; (2) Contents: big data is a trans-disciplinary area of research with no clear taxonomy nor classifications. Analyzing content in a statistical manner can help us gain insights about the different ways in which it is framed and thematized in the different branches of knowledge; (3) Citations: although citation should not be taken as a valid tool to assess the quality of a publication, it is indeed a valuable metric to assess visibility and influence (Eibrahim, 2014). Hence, bibliometrics that draw on citation analysis are useful to identify possible trends and other eigen-values on topics and approaches. Several papers used bibliometric and citations analysis to map the big data scientific production, including these issues (we'll review these in the next section), but to the best of our knowledge, no one has focus on the social sciences and humanities. 
 
 Our research questions are:
 
@@ -90,80 +90,19 @@ Our research questions are:
   * **RQ3.3** cuantas citas por año?
   * **XXXXX  a que clasicos se cita? (para otro laburo!)**
 
+**falta aclarar secciones**
+
 
 # Related works
 
 
-**(TRATAMIENTO BIBLIOMETRICO DEL BIG DATA)**
+There are several works dedicated to bibliometrics in relation to big data. The closest to our interests, but also the most updated and comprehensive study, is the excellent paper by Ahmad et. al. (2020). They analyzed 33,623 works from 2008 to 2017, retrieved via Scopus, by searching "big data" in title and keywords. They did not limit the literature search to computer science alone, but allowed results from social, medical and business sciences. In fact, the only limit reported is English as language, and the exclusion of conference review, editorial notes, and letters document types. Their main objective was to spot top cited papers, the contributions of countries, and to identify key research areas.Drawing also on Scopus, Liu et. al. (2019) conducted a bibliometric analysis in a set of 4,070 articles published between 2013 and 2018. Besides analyzing trends in production and collaboration across countries and institutions, they used Scopus' SciVal to evaluate the performance of the papers and calculated field-weighted citation impact.Kalantari et. al. (2017) analyzed 6,572 papers from the Thomson Reuters’ Web of Science (WoS) core collection database between 1980 and 2015. Interestingly, they worked with a wide range of search keywords gathered by experts (arguibly from computer sciences) interviews and survey. In addition to general trends about production by year, country and research area, and about ranking of journals and authors, plus a comprehensive citation analysis, they provided a multi-regression analysis in order to explore how number of pages, references, and authors contibuted to the citation received. Drawing on 5840 articles retrieved Web of Science (WoS) covering the period between 2000 and 2015, Zhang et. al. (2019) performed bibliometric analysis and text-mining techniques, to show time and geographic distribution and core constituents, and also to simulate, visualize and predict the evolution of topics -mostly about technological changes- related to big data. Liang and Liu (2018) analyzed 10,637 publications associated with big data and 1,168 publications associated with business intelligence, retrieved from Social Science Citation Index, Science Citation Index Expanded and Arts & Humanities Citation Index for 1990 to 2017. They performed a dynamical analysis to find trends about emerging topics and explore their disciplinary distribution. 
 
-Los mas generales. 
+Besides these general reviews, there are several studies that focus on specific areas and topics related to big data. E.g., Mishra et. al. (2018) performed bibliometrics and in-depth literature review concerning big data and supply chain management for 286 articles published in 2006-2016 and retrieved via Scopus; Rialti et. al. (2019) systemathized 170 articles from the Clarivate Analytics Web of Science Core Collection database regarding big data and (managerial) dynamic capabilites, in order to provide and in-depth literature review. Other bibliometrics and text-mining analysis were performed for business publications (Amado, Cortez, Rita, & Moro, 2018; Moro, Cortez, & Rita, 2015; Ngai, Xiu, & Chau, 2009). Finally, although is not a bibliometric work, De Mauro et. al. (2015) presented a very interesting topic analysis on big data publications that resulted in a conventional definition of this phenomena in the academia and business. For our purposes, most of these are limited in terms of the inclusion criteria.
 
-xxxxxxxxxxxxxxxxxxxxxx LOS UQE YA ESTAN:
+In the remainder of this section we synthesize these regarding authorship, topics and citations, in order to provide a context or benchmark for comparisson for the results we present in the next section.
 
-Ahmad, I., Ahmed, G., Shah, S. A. A., & Ahmed, E. (2020). A decade of big data literature: analysis of trends in light of bibliometrics. Journal of Supercomputing, 76(5), 3555–3571. 
-
-Using Scopus as the data source, we perform a thorough analysis of scholarly works published in the field ofbig data from 2008 to 2017.
-
-Our choice for data collection is Scopus because of service availability, ease of use and authenticity of the data [26]. 
-Therefore, we chose 2008 as starting year for our data extraction. Thus, the time frame spans a decade of research in the field. Our search criteria have resulted in total of 34,655 documents. Using the graphical user interface provided by Scopus, we exclude some document types namely conference review, editorial notes, and letters. The main motivation behind the omission of these document type resides in the fact that they mostly provide information about the outlet such as scope of the conference/special issue, the number of submissions, and the acceptance rate, and normally have very low citation counts. The omission of these documents reduced the documents number to 33,623. As stated earlier that big data is a transdisciplinary field, we did not limit to literature from computer science only and allowed results fromdiverse fields such as business, medical science, and social sciences.
-
-
-Liu, X., Sun, R., Wang, S., & Wu, Y. J. (2019). The research landscape of big data: a bibliometric analysis. Library Hi Tech, 38(2), 367–384. https://doi.org/10.1108/LHT-01-2019-0024
-
-A bibliometric method was used to analyze the articles obtained from the Scopus database published between 2013 and 2018. A sample size of 4,070 articles was evaluated using SciVal metrics.
-
-
-Kalantari, A., Kamsin, A., Kamaruddin, H. S., Ale Ebrahim, N., Gani, A., Ebrahimi, A., & Shamshirband, S. (2017). A bibliometric approach to tracking big data research trends. Journal of Big Data, 4(1), 1–18. https://doi.org/10.1186/s40537-017-0088-1
-
-For example, Kalantari et al. (2017) adopted the bibliometric approach to analyze 6,572 papers relevant to big data research, which were published in the Web of Science core collection database between 1980 and 2015. 
-
-In this study, bibliometric tools have been selected to determine the major and essen-
-tial research trends in the field of big data research, and the most relevant research areas upon which big data has a significant impact. The Thomson Reuters’ Web of Sci- ence (WoS) database is used to extract the bibliometric information for “big data”. The WoS is a structured database that indexes selected top publications that, covering the majority of significant scientific results [13]. A total of 6572 papers were collected from WoS and the aim of this research is to provide a comprehensive analysis and evaluate the latest research trends followed by the Document Type and Language, Publication output, Contribution of Countries, Top WoS Categories and Journals, Top Authors, Top Research Areas and Analysis of Author Keywords and Keyword Plus related to the field of big data and its most relevant research areas
-
-
-Liu, X., Sun, R., Wang, S., & Wu, Y. J. (2019). The research landscape of big data: a bibliometric analysis. Library Hi Tech, 38(2), 367–384. https://doi.org/10.1108/LHT-01-2019-0024
-
-A bibliometric method was used to analyze the articles obtained from the Scopus database published between 2013 and 2018. A sample size of 4,070 articles was evaluated using SciVal metrics.
-
-
-Liang, T. P., & Liu, Y. H. (2018). Research Landscape of Business Intelligence and Big Data analytics: A bibliometrics study. Expert Systems with Applications, 111(128), 2–10. https://doi.org/10.1016/j.eswa.2018.05.018
-
-Liang and Liu (2018) used the bibliometric method to explore the research and development trends of research pertaining to big data and business intelligence based on three databases: Social Science Citation Index, Science Citation Index Expanded and Arts & Humanities Citation Index. 
-
-n this article, we review academic literature associated with “Big Data” and “Business Intelligence” to explore the devel- opment and research trends. We use bibliometric methods to analyze publications from 1990 to 2017 in journals indexed in Science Citation Index Expanded (SCIE), Social Science Citation Index (SSCI) and Arts & Humanities Citation Index (AHCI). We map the time trend, disciplinary distribution, high-frequency keywords to show emerging topics
-
-Our search using “Big Data” and “Business Intelligence as key
-words resulted in the database that includes 10,637 publications associated with “Big Data” and 1168 publications associated with “Business Intelligence.” Among these documents, 141 publications contain both “Big Data” and “Business Intelligence.”
-
-How research topics change and evolve in these academic out- puts?
-• Which discipline drives the related research? • Who are major contributors toward these outputs? Which pa- per is the most influential?
-• What are the most-cited references among these outputs?   
-
-
-Zhang, Y., Huang, Y., Porter, A. L., Zhang, G., & Lu, J. (2019). Discovering and forecasting interactions in big data research: A learning-enhanced bibliometric study. Technological Forecasting and Social Change, 146(April), 795–807. https://doi.org/10.1016/j.techfore.2018.06.007
-
-We draw on 5840 articles derived from the Web of Science (WoS) to
-conduct this study. Specifically, the R&D profile is to review the land- scape of big data research by: 1) profiling the statistical dynamics and geographic distribution of related scientific articles; and 2) identifying the core constituents, i.e., the leading journals, organizations, and countries, and their competitive and collaborative relationships in this area. The scientific evolutionary pathways (SEP) create a solution to detect and visualize the technological changes in big data research from 2000 to 2015, in which a learning process is used to track the inter- active relationships between topics in sequential time slices, revealing technological evolution and death by identifying predecessors and descendants of big data topics. At the end, we combine expert knowl- edge and our analytic results to foresee future directions of big data research in the near future and provide recommendations.
-
-
-
-
-Hay otros que son específicos de un área o tema
-
-
-Mishra, D., Gunasekaran, A., Papadopoulos, T., & Childe, S. J. (2018). Big Data and supply chain management: a review and bibliometric analysis. Annals of Operations Research, 270(1–2), 313–336. https://doi.org/10.1007/s10479-016-2236-y
-
-For example, by applying the bibliometric method and network technique, Mishra et al. (2018) produced a literature review concerning big data and supply chain management on the basis of an assessment of 286 articles published in the previous decade. 
-
-
-Rialti, R., Marzi, G., Ciappei, C., & Busso, D. (2019). Big data and dynamic capabilities: a bibliometric analysis and systematic literature review. Management Decision, 57(8), 2052–2068. https://doi.org/10.1108/MD-07-2018-0821
-
-Recently, several manuscripts about the effects of big data on organizations used dynamic capabilities as their main theoretical approach. However, these manuscripts still lack systematization. Consequently, the purpose of this paper is to systematize the literature on big data and dynamic capabilities. Design/methodology/approach – A bibliometric analysis was performed on 170 manuscripts extracted from the Clarivate Analytics Web of Science Core Collection database. The bibliometric analysis was integrated with a literature review
-The first one deals with the implementation of BDA systems for supply chain management and the second is about the effect of big data and BDA on supply chain management performance.
-
-
-
-## 1/ autoria
+## Authorship
 
 Ahmad, I., Ahmed, G., Shah, S. A. A., & Ahmed, E. (2020). A decade of big data literature: analysis of trends in light of bibliometrics. Journal of Supercomputing, 76(5), 3555–3571. https://doi.org/10.1007/s11227-018-2714-x
 
