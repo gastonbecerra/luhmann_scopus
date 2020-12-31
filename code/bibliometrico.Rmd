@@ -50,74 +50,30 @@ references <- readRDS(file = "../data/referencias/referencias.rds")
 
 # Introduction
 
+
 This work explores, through a bibliometric analysis, the scientific literature about "Big data" in social sciences, psychology and humanities. Working on a XXXX papers dataset retrieved from Scopus, we aim to identify trends about authorship and collaboration, topics and study areas, and the most influential works. Such objective is a particular step within a broader project aiming to compare how big data is thematized and framed in different social systems, such as mass media, science, politics, commerce, economics, among others (Becerra, 2018). 
 
-The term "big data" originated in late 1990s in the IT sector, referring to the (technical) challenges of handling a vast amount of information (Diebold, XXXX). In a famous consultancy piece, Douglas Laney (2001) synthesized these challenges by referencing 3 v’s -volume, velocity, and variety-, a formula that expanded to include other v-words such as, visualization or value, and that usually takes the place of a definition. From here, big data has expanded to different areas of social life, such as politics, mass media, business, among others. 
+The term "big data" originated in late 1990s in the IT sector, referring to the (technical) challenges of handling a vast amount of information (Diebold, XXXX). In a famous consultancy piece, Douglas Laney (2001) synthesized these challenges by referencing 3 v’s -volume, velocity, and variety-, a formula that expanded to include other v-words such as, visualization or value, and that usually takes the place of a definition. Ironizing this, "Vexatious vagueness" is the implicit last v-word, says Halavais (2015).
 
-Drawing mostly on mass media discourse, in another work (Becerra, 2021) we've proposed that communications regarding big data usually include 2 highly debatable elements: a premise regarding the availability of huge volumes of data that can be exploited; and a promise that new knowledge and understandings about all aspects of human life will be reached through data analysis. These elements are part of a widespread belief and mythology that relate big data with other socio-technical developments, such as artificial intelligence and algorithms, and offer the promise of an objective, effective and optimal, value-free, and conflict-free social future (boyd & Crawford, 2021; van Dijck, 2014; Sadin, 2018; among others).
+From here, big data has expanded to different areas of social life, such as politics, mass media, business, among others. Critical case studies, from a social science perspective, are still required to understand the social meaning of big data in such spaces. 
 
-Scientific interest on big data has also been on the rise in the last decade. According to several studies (e.g., Belmonte, et. al., 2020; Liu et. al., 2019), and drawing on different sources, the scientific big data literature has grown yearly in a X2 rate for the 2010-2014 range; and, although this trend has slowed down, up until 2020 the number of papers per year never decreased.
+Drawing mostly on mass media discourse, in another work (Becerra, 2021) we've proposed that communications regarding big data usually include 2 highly debatable elements: a premise regarding the availability of huge volumes of data that can be exploited; and a promise that new knowledge and understandings about all aspects of human life will be reached through data analysis. These elements are part of a widespread belief, rhetoric and mythology that relate big data with other socio-technical developments, such as artificial intelligence and algorithms, and offer the promise of an objective, effective and optimal, value-free, and conflict-free social future (boyd & Crawford, 2021; van Dijck, 2014; Sadin, 2018; among others).
 
-Given this 
+Scientific interest on big data has also been on the rise in the last decade. According to several studies (e.g., Belmonte, et. al., 2020; Liu et. al., 2019), and drawing on different sources, the scientific big data literature has grown yearly in a X2 rate for the 2010-2014 range; and, although this trend has slowed down, up until 2020 the number of papers per year never decreased. Others have shown that the estimated contribution from the social sciences and humanities is near the 7-10% of this corpus (Kalantari et. al., 2017; Liu et. al., 2019). 
 
+Facing big data, social sciences and humanities found a big challenge: to criticize and discuss the premise and the promise of its rhetoric and mythology, to disect the social beliefs and ideologies around it, to illuminate the extent of social and ethical issues that it brings, and to re-shape it from within to advance our understanding of ourselves. 
 
-Bibliometrics is a statistical method that is commonly used in the academic literature review for quantifying the assessment of scientific outputs (Bellis, 2009). It has also been used in the study of big data-related literature.
+To dwell on a few of these: 
 
+* philosophy and other humanities have been discussing the harms of research on big social data -e.g., data collection through Facebook apps and active campaigns-, pinpointing issues on privacy and social reactivity in a time when the research/experimentation seems to be fading and regulatory definitions demand revisions (Metcalf & Crafword, 2016; Mai, 2016; Leonelli, 2016; Weinhardt, 2020; Zuboff, 2015); 
+* social sciences and epistemology have warned that big social data, and any other sources generated in the datafication process, are embedded with limitations and conditioning from the data gathering/creation settings, and that also the data curation process required for algorithmical analysis is a heavily decision task that challenge the neutrality and objectivity of some data science claims (Mutzel, 2015; Gitelman, 2013; Qiu et. al., 2018)
+* also social sciences, psychology and humanities have been discussing different integrations big data in social research, in a way that could allow to guide data-driven analysis through the rich theoretical awareness of these traditions (Frade, 2016; Halford & Savage, 2017; Burrows & Savage, 2014; boyd & Crawford, 2012). As Halavais (2015) synthezises with regards to sociology:
 
-Bibliometrics and citation analysis is used in various fields to identify the most influentialwork and researchers, and in the analysis and evolution ofa specific research theme [17,55]. It is applied in various domains of science such as medicine [19], physics [27], social sciences [34], and computer sciences [24].
+> "Big data does provide a challenge to the social sciences, but not a particularly new one. It is, in fact, the core challenge of sociology: connecting the micro-connections between individuals to the vast social structures that shape us (and are shaped by us) as a society. Mills famously suggested that this ability to both connect and disconnect the personal with the social was at the core of what he called the ‘sociological imagination’."
 
-Bibliometrics was the methodology used to develop the study and achieve the scope of the proposed objectives. The choice of this research approach was based on the greatness of Scientometrics for the search, registration, analysis and prediction of scientific literature [29]. For optimal development, the guidelines of experts in bibliometric were followed [30] /// Moral-Muñoz, J.A.; Herrera-Viedma, E.; Santisteban-Espejo, A.; Cobo, M.J. Software tools for conducting bibliometric analysis in science: An up-to-date review. EPI 2020, 29, 1–20. [CrossRef] // Martínez, M.A.; Cobo, M.J.; Herrera, M.; Herrera-Viedma, E. Analyzing the Scientific Evolution of Social Work Using Science Mapping. Res. Soc. Work Pract. 2015, 25, 257–277. [CrossRef]
+In this paper we focus on papers from social sciences, psychology and humanities and arts. We do so in a bibliometric approach that aims at assessing and analyzing in a quantitative manner trends in the publications. Specifically, we are interested in 3 key issues for which bibliometric analysis has proven to be an useful and a valid methodology: (1) Authorship: access to big data is unequal because of costs and skills. This is true for the users and citizens but also within the academic world (McCarthy, 2016). Analyzing authorship is a way to shed some light on these issues. Also, although using co-authorship as proxy for real academic collaboration has been discussed (Ponomariov & Boardman, 2016), it is indeed and interesting metric to explore trends in integration and crossings between nations and types of institutions (e.g., academia and private sector), which are argueably challenges required for big data research; (2) Contents: big data is a trans-disciplinary area of research with no clear taxonomy nor classifications. Analyzing content in a statistical manner can help us gain insights about the different ways in which it is framed and thematized in the different branches of knowledge; (3) Citations: although citation should not be taken as a valid tool to assess the quality of a publication, it is indeed a valuable metric to assess visibility and influence (Eibrahim, 2014). Hence, bibliometrics that draw on citation analysis are useful to identify possible trends and other eigen-values on topics and approaches. Several papers used bibliometric and citations analysis to map the big data scientific production, including these issues (we'll review these in the next section), but to the best of our knowledge, no one has focus on the social sciences and humanities. 
 
-In science, it is imperative to identify the importance of research publications as well as the trends of research [3,17,55]. Bibliometrics is one such tool that performs quantitative analysis of research publications [19,33,34,55]. Bibliometrics identifies the most influential work in a specific field mostly by utilizing citation counts as a metric. Citations in turn help build new works on top of the existing knowledge, and forms a connection between the novel approaches to those of its predecessors. Other purposes of citations include crediting the peers’ work, providing background information, and contextualizing one’s own work [53]. Citation count is also a good indicator of the influence and visibility of a scientific publication. Bibliometrics and citation analysis is used in various fields to identify the most influentialwork and researchers, and in the analysis and evolution ofa specific research theme [17,55]. It is applied in various domains of science such as medicine [19], physics [27], social sciences [34], and computer sciences [24].
-
-Bibliometric is defined as the application of mathematical and statistical methods to
-papers, books and other means of communication that are used in the analysis of science publications [17]. To recognize the research trends, bibliometric methods are usually used to evaluate scientific manuscripts [18, 19]. Bibliometric methods have been used to measure scientific progress in many disciplines of science and engineering, and are a common research instrument for the systematic analysis of publications [20–24]. In this research, bibliometric analysis is employed in the field of “big data”
-
-
-**(JUSTIFICACION DE LOS 3 TEMAS)**
-
-Se ha tratado lo siguiente:
-
-AUTORES
-
-Leading / countries?
-
-TOPICOS
-
-Unlike other scientific fields that have clear taxonomy and classification of the sub- ject area [8], there is no classification scheme for big data. We use the frequency of keywords as metric to identify sub-areas and topics that gained the attention of researchers over the course of time. Our analysis found that the phrase “Big Data” is the most widely used keyword in our collection of records, which is unsurprising. The other keywords in order of occurrences are Data Mining (4995), Data Handling (4242) Digital Storage (3185), Cloud Computing (2921), Information Management (2795), Artificial Intelligence (2769), Distributed Computer Systems (2515), Learn- ing Systems (2261), and Algorithms (2027). In order to make the comparisons more realistic, we removed the keyword “Big Data” and designed a word cloud using the statistical software R (see Fig. 1).
-
-CITACION
-
-Although, the citation is not a scientific tool to assess the publication, it is a valuable metric that recognizes research parameters [27]. The citation index, as a type of bibliometric method, shows the number of times an article has been used by other papers [28]. Hence, citation analysis helps researchers to obtain a prelimi- nary idea about the articles and research that has an impact in a particular field of inter- est and it deals with the examination of the documents cited by scholarly works [29, 30].
-
-
-**(SOBRE BIBLIOMETRIA y este interés en ciencias sociales)**
-
-In the following section we review these papers and summarize their findings regarding the 3 areas of interest mentioned, ............ COMO CONTEXTO PARA ENTENDER LO QUE PASA EN CIENCIAS SOCIALES
-
-
-figure 3 illustrates the sampled articles
-by academic domain. It is found that a significant portion of the sample is attributed to two domains, i.e. Computer Science and Engineering, with 29.6 and 19 percent, respectively. This information echoes the finding discovered by Kalantari et al. (2017), in which Computer Science, Engineering, Telecommunications, Operations Research Management Science and Medical Informatics are recognized as the five most popular areas in academia. In addition, Figure 3 also shows that the usage of big data is not only in the field of natural science, such as Computer Science, Engineering, Mathematics and others, but also social science, i.e. Business, Management and Accounting domains 
-
-Social Sciences – 7.7%
-Computer Science – 29.6%
-Engineering – 19% 
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-ciencias sociales para repensar lo etico / critico?
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-**In this work we draw heavily on the excellent work by Ahmad et. al (2020)**
-
-Ahmad, I., Ahmed, G., Shah, S. A. A., & Ahmed, E. (2020). A decade of big data literature: analysis of trends in light of bibliometrics. Journal of Supercomputing, 76(5), 3555–3571. 
-
-will provide context for comparisson between science literature and social sciences (included)
-
-**(RQ)**
-
-ALGO ASI? The main objective of choosing the research questions is to identify the top cited papers, the contributions of various countries in advancing big data research, and identification of key research areas. The set of research questions are as following
+Our research questions are:
 
 * **RQ1** Cuál es la dinámica  de autoría y colaboración? 
   * **RQ1.1** What is the average number of authors per publications per year? 
@@ -127,25 +83,20 @@ ALGO ASI? The main objective of choosing the research questions is to identify t
   * **RQ2.1** frecuencia de keywords
   * **RQ2.2** relaciones entre keywords (red y mapa semantico)
   * **RQ2.3** cuales son los temas? (topic modelling)
+  * **XXXXX como se tematiza el big data? (para otro laburo!)**
 * **RQ3** Citaciones
   * **RQ3.1** top venues <------------- no esta hecho
   * **RQ3.2** What are the top cited publications for each year in the selected time frame? Articulos más influyentes (+citas)
   * **RQ3.3** cuantas citas por año?
-
-(preguntar citas a clasicos?)
-
-**(secciones)**
-
+  * **XXXXX  a que clasicos se cita? (para otro laburo!)**
 
 
 # Related works
 
 
-
 **(TRATAMIENTO BIBLIOMETRICO DEL BIG DATA)**
 
 Los mas generales. 
-
 
 xxxxxxxxxxxxxxxxxxxxxx LOS UQE YA ESTAN:
 
