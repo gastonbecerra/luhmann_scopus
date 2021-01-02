@@ -142,6 +142,13 @@ We selected the database Scopus to construct our corpus because it offered both 
 
 For the search we used the criteria "big data" in title, abstracts, and keywords. We limited the subject area to social sciences, psychology and humanities and arts, the language to English, and the publication type to journal articles. The dataset was exported the first of December of 2020. Although initially no date limits were applied, most of the publications were comprised between 2010-2020. From the original result of 5,610 records, we kept XXXX that were included in this shorter timespan, and had no incomplete information about authors and journal. 
 
+```{r prepro, echo=FALSE, message=FALSE, warning=FALSE}
+
+glimpse(metadata)
+metadata %>% filter(tag=="year") %>% count(value)
+
+```
+
 Keywords, abstracts and other metadata had only minimal pre-processing (text transformed to lowercase, removed symbols and numbers). References were parsed using the RubyGem version of Anystyle.[^1] All the analysis and visualization were done with statistical software R (Team R Core, 2018).
 
 [^1]: https://anystyle.io/
@@ -149,6 +156,8 @@ Keywords, abstracts and other metadata had only minimal pre-processing (text tra
 Most of our research questions did not required more than descriptive statistics and visualization techniques. To express the author's collaboration we used Subramanyam Index (Subramanyam, 1983) that calculates the proportion of articles with +2 authors over the total of articles. To identify topics and key issues we performed topic modeling over the abstracts, using  the Latent Dirichlet Allocation model (D. Blei, Ng, & Jordan, 2003), via the XXXXX R package (Grün & Hornik, 2011), which posits different distributions of the corpus’ vocabulary as topics, and calculates the proportional mix of them for each document. Since the number of topics must be introduced as a parameter, after several runs and statistical tests with different parameters, we settled on a X topics solution. By **theoretically interpreting** representative documents for each of the topic detected, we formulated a taxonomy of X categories. ESTA ULTIMA ORACION ES UNA GAROMPA
 
 # Results
+
+
 
 The total number of articles found was XXXX
 As it can be noted in Graph 1, the greatest production took place in the xxxxx
