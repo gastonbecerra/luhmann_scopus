@@ -22,10 +22,10 @@ library(igraph)
 library(ggraph)
 library(tidygraph)
 
-metadata <- readr::read_csv(file = "../data/metadata.csv")
-ocr <- readr::read_csv(file = "../data/ocr.csv")
-autores <- readr::read_csv(file = "../data/autores.csv")
-references <- readRDS(file = "../data/referencias/referencias.rds")
+metadata <- readr::read_csv(file = "../../data/metadata.csv")
+ocr <- readr::read_csv(file = "../../data/ocr.csv")
+autores <- readr::read_csv(file = "../../data/autores.csv")
+references <- readRDS(file = "../../data/referencias/referencias.rds")
 
 ```
 
@@ -38,7 +38,7 @@ references <- readRDS(file = "../data/referencias/referencias.rds")
 - over 50% of publications do not receive any citations, and the average number of citations per publication is 3.17. 
 - It is also observed that single authorship of research publications has declined over the time. 
 - The analysis reveals the pioneering role played by the USA in advancing the research in big data, which has lately been taken over by China, and the large-scale usage of big data analytics in various domains of science.*
-***Originality/value**: To the best of the authors’ knowledge, this is the first study to provide a holistic view of the big data research. The insights obtained from the analysis are instrumental for both academics and practitioners.*
+***Originality/value**: To the best of the authors’ knowledge, this is the first study to provide a holistic view of the big data research. The insights obtained from the analysis are instrumental for both academics and practitioners.* **FALTA EL ABSTRACT**
 
 **Keywords**: Big data, social sciences, humanities, bibliometric analysis, citation analysis
 
@@ -89,13 +89,16 @@ Our research questions are:
 # Related works
 
 
-Several papers have used bibliometric analysis to map the big data scientific production, with different goals and levels of analysis. With exception of a brief section from (), and to the best of our knowledge, this is the first study that focuses on social sciences, psychology and humanities, and provide a comparative view with the global production across disciplines.
+Several papers have used bibliometric analysis to map the big data scientific production, with different goals and levels of analysis. The closest to our interests, and the most updated and comprehensive study, is Ahmad et. al. (2020). They analyzed 33,623 works from 2008 to 2017, retrieved via Scopus, by searching "big data" in title and keywords. They did not limit the literature search to computer science alone, but allowed results from social, medical and business sciences. In fact, the only limit reported is English as language, and the exclusion of conference review, editorial notes, and letters document types. Their main objective was to spot top cited papers, the contributions of countries, and to identify key research areas. 
 
-The closest to our interests, and the most updated and comprehensive study, is Ahmad et. al. (2020). They analyzed 33,623 works from 2008 to 2017, retrieved via Scopus, by searching "big data" in title and keywords. They did not limit the literature search to computer science alone, but allowed results from social, medical and business sciences. In fact, the only limit reported is English as language, and the exclusion of conference review, editorial notes, and letters document types. Their main objective was to spot top cited papers, the contributions of countries, and to identify key research areas. 
 Drawing also on Scopus, Liu et. al. (2019) conducted a bibliometric analysis in a set of 4,070 articles published between 2013 and 2018. Besides analyzing trends in production and collaboration across countries and institutions, they used Scopus' SciVal to evaluate the performance of the papers and calculated field-weighted citation impact. 
+
 Kalantari et. al. (2017) analyzed 6,572 papers from the Thomson Reuters’ Web of Science (WoS) core collection database between 1980 and 2015. Interestingly, they worked with a wide range of search keywords gathered by experts (arguibly from computer sciences) interviews and survey. In addition to general trends about production by year, country and research area, and about ranking of journals and authors, plus a comprehensive citation analysis, they provided a multi-regression analysis in order to explore how number of pages, references, and authors contibuted to the citation received. 
+
 Drawing on 5,840 articles retrieved Web of Science (WoS) covering the period between 2000 and 2015, Zhang et. al. (2019) performed bibliometric analysis and text-mining techniques, to show time and geographic distribution and core constituents, and also to simulate, visualize and predict the evolution of topics -mostly about technological changes- related to big data. 
+
 Belmonte et. al. (2020) review 4,240 papers related to big data and machine learning for the period 2010-2019, indexed in Web of Science (WoS). Their focus was on performance of these works, using bibliometric indicators such as h-index, g, and others, in a dynamic view that tried to analyze the path and projection of both terms. The authors concluded that machine learning is the topic with the highest bibliometric levels, and the one that most probably will be driving the research enterprise, even above big data.
+
 Finally, Liang and Liu (2018) analyzed 10,637 publications associated with big data and 1,168 publications associated with business intelligence, retrieved from Social Science Citation Index, Science Citation Index Expanded and Arts & Humanities Citation Index for 1990 to 2017. They performed a dynamical analysis to find trends about emerging topics and explore their disciplinary distribution. Further, they subset their corpus, and focused on 2,819 papers from social sciences and humanities journals to explore -although very briefly- topics and citations. To the best of our knowledge this is the only work that has focused -at least partially- on the disciplines we are interested in.
 
 Besides these general reviews, there are several studies that focus on specific areas and topics related to big data. 
@@ -103,38 +106,7 @@ E.g., Both Mishra et. al. (2018) and Inamdar et. al. (2020) performed bibliometr
 Rialti et. al. (2019) systemathized 170 articles from the Clarivate Analytics Web of Science Core Collection database regarding big data and (managerial) dynamic capabilites, in order to provide and in-depth literature review. 
 Other bibliometrics and text-mining analysis were performed for business publications (Amado, Cortez, Rita, & Moro, 2018; Moro, Cortez, & Rita, 2015; Ngai, Xiu, & Chau, 2009). Finally, although is not a bibliometric work, De Mauro et. al. (2015) presented a very interesting topic analysis on big data publications that resulted in a conventional definition of this phenomena in the academia and business. 
 
-In the remainder of this section we compare and synthesize these works regarding authorship, topics and citations, in order to provide a context or benchmark for our results in the next section.
-
-**RQ1**. Production and authorship are the first issues we will be exploring. 
-
-Regarding production, in geographical terms, most of the consulted papers agree to highlight the dominance of People’s Republic of China (first place) and USA (second place), sharing near 50% of the different corpora. USA was leading the production up until 2015 approx, when China production exploded. These countries appear in inverse order only in the work of Kalatari et. al. (2017) and of Belmonte et. al. (2020), which includes a much larger and earlier timespan considered, and a broader set of search criteria. Following these are India, UK, France, Germany, South Korea, in different orders depending on the corpus. USA and China are the countries that collaborate the most, both between them and with other countries. Comparatively, Canada, Autralia, Switzerland and Japan show less production than the other aforementioned countries, but have a larger centrality in collaborations. South American, Middle-eastern, and African countries show the least level of production. 
-
-Institutional affiliation has been analyzed in far extent. Ahmad et. al. (2020) reports that Chinese institutions, such as Chinese Academy of Sciences and Tsinghua University, not only rank on top of the production but also in the concentration of papers per institution; USA production seems to be less concentrated. Again, Belmonte et. al. (2020) registered and inverse ranking, with Harvard and universities from California and Texas on top. Zhang et. al. (2019) highlights that world-class universities from USA, although not that prominent as Chinese institutions, are much more interconnected in terms of collaboration. Liu et. al. (2019) reported that only 2.8% of the papers of its dataset are produced jointly between academia and corporations. The authors conclude that "this finding is likely to indicate that, in the field of big data research, joint work contributed by both academia and industry is not popular". The corporate institutions that collaborate with academia the most are IBM, Intel and Microsoft.
-
-In terms of authorship, most of the works agree that collaboratory authorship is the standard practice by far: only near 10-15% of the papers were written by a single author, more than 40% have at least 4 authors, and even there's a 1-2% of the papers that have more than 10 authors. Liu et. al. (2019) also suggest that single authorship ranks last in terms of impact. Most papers also agree that single authorship is declining, and that there seems to be a trend toward including more authors. Finally, XXXX suggests that collaboratory authorship is a requirement in big data research because of the costs and the difficulty of the data gathering and processing tasks involved.
-
-**RQ2**. Contents is the second issue to be explored. Most of the revised papers draw on keyword frequency and/or keyword correlation to identify topics and sub-areas of research. 
-
-As expected, "big data" is the single most used keyword in most of the datasets. The exception that proves the rule is found at Kalantari et. al. (2017), which include papers from 1980s and whose search criteria include big data among others, but still show it as the most used keyword in the range 2010-2015. Belmonti et. al. (2020), on the other hand, highlight the centrality of machine learning.
-Data-related tasks, such as mining, handling, storage, are the top keywords along with big data, according to Ahmad et. al. (2020). These are all general terms that originated in computer science but cannot be univocally confined to that space anymore. On the contrary, a topic that resides in computer science is the one that refer to tools and solutions for big data, such as Hadoop, MapReduce, or parallel and cloud computing. This is a topic that appear on most of the revised surveys. Authors agree that in the early days of big data the researchers focused mainly on its uses and applications, and on the technical challenges posed by it. 
-
-Business intelligence, a topic closely related to big data applications and big data analytics, also appears across the surveys. Keywords that most resemble this topic are decision making, commerce, information management, and (business sector) management. According to Liang & Liu (2018), by 2014 management was one on the top keywords along with data mining, data science, which could be indicative of this topic closeness with the previous one; more specific terms, like big data analytics, knowledge management and others appear later. These authors also suggest that big data corpus is much more technical than business inteligence which is more application-oriented.
-
-A third sub-area that appears on most surveys is related to analysis notions, such as machine learning, model, statistics, classification, or even artificial intelligence. Interestingly, most of these are topics that have been around for decades, whose keywords were the most frequent some years ago, and that lost prominence near 2015, but later resurged thanks to the re-discovery of their potential with big data. This trend has been registered by Kalantari et. al. (2019), Belmonte et. al. (2020), and Zhang et. al. (2019), who refer to some of these as "sleeping beauties". 
-
-Ahmad et. al. (2020), Zhang et. al. (2019) and Liang & Liu (2018) identified a final topic that deals with big data integration with novel technologies that provide new sources and streams of data, such as Internet of Things (IoT), bioinformatics and social big data (e.g., social networks and apps). These are all emerging topics, absent in earlier surveys like the one by Kalantari et. al. (2017), although a few analytical techniques that originated years ago, such as sentiment analysis, opinion mining, or anomaly detection, have been revamped. We should remark that this topic seems to be the first one to include some "social" issues and concerns, such as privacy protection and human/patient care. 
-
-Finally, Liang and Liu's (2018) paper include a brief report on social science and humanities corpus, constructed by subseting their big data and business intelligence corpus. The authors identified 10 topics by analyzing keywords and citation networks: the earliest incidence corresponds to medical-related issues, "where big data started in social sciences. It also echoes the fact that health care service is the most important field for big data applications"; the second topic, one that remains steady until 2015 (although it must be noted that their corpus is dated until 2017), renders big data as an emerging technology, referencing works like Kitchin (2014) that both presented the first comprehensive sociological analysis of big data and a critical programme for its analysis; another important topic is research on agenda setting, ilustrated with Lazer (2014), which spans between 2007 upto 2009. "In 2014, there were still many papers referring to agenda setting ... but almost none was cited after 2015. It may indicate that the studies involving agenda setting in big data had come to an end"; the rest of the topics they mention relate to business processes, and analysis techniques.
-
-**RQ3**. The last issue we are interested in is citation, as a mean to identify influential works and venues.
-
-In terms of citation distribution, Ahmad et. al. (2020) report that over 50% of publications are not cited, and that 80% of citations are received by aprox. 15% of the publications. The authors highlight that this statistics resemble those reported by Garounsi and Mäntylä (2016) for software engineering. Similarly, Kalantari et. al. (2017) used the Essential Science Indicators (ESI) tool provided by Thomson Reuters to identify 28 highly cited papers out of their dataset of 6,572, and reported average citations of 126.75 against 4.97.
-
-Unsurprisingly, several of the papers reviewed report that the most cited works correspond to early survey papers, both on the general term of big data and on specific techniques, such as, "Big data: a survey" (Chen et. al., 2014), "Lexicon-based methods for sentiment analysis" (Taboada, et. al., 2011), or "Data mining with big data" (Wu et. al., 2014). These are all, arguably, technical papers that map the state of the art, and the upcoming challenges in the field.
-
-A few interesting exceptions are some critical analysis, reflections and/or experimentations drawing on big social data, such as the study on "emotional contagion" in Facebook (Kramer, 2014) or the uses of Google for health trends detection (Lazer, et. al., 2014). In these, controversy may play an important factor, because of the claims received about the lack of informed consent and the impossibility to opt-out of the experiment by the former, and the introduction about "big data hubris" in the latter. Another exception is the excellent "Critical Questions for Big Data" by danah boyd and Kate Crawford (2014), which poses concerns about big data mythology and possible missuses. 
-
-The predominance of computing and engineering papers is confirmed if we consult the top venues for publications, both in terms of citation and publication counts: Lecture Notes in Computer Science, Lecture notes in artificial intelligence, Proceedings of the VLDB Endowment, Bioinformatics, Procedia Computer Science, and the series published by IEEE. Top journals, with transdisciplinary orientation, such as Nature, Plos One, or the Proceedings of the National Academy of Sciences of the United States of America are also present. 
+In the Results section we compare and synthesize these works regarding authorship, topics and citations, in order to provide a context or benchmark for our results.
 
 # Methodology
 
@@ -145,7 +117,19 @@ For the search we used the criteria "big data" in title, abstracts, and keywords
 ```{r prepro, echo=FALSE, message=FALSE, warning=FALSE}
 
 glimpse(metadata)
+table(metadata$tag)
 metadata %>% filter(tag=="year") %>% count(value)
+source("9_sample_stats.R", local = knitr::knit_global())
+
+articles <- metadata %>%
+  select(-source) %>% 
+  pivot_wider(id_cols = id, names_from = tag, values_from = value) 
+
+articles <- metadata %>% group_by(id) %>% nest()
+
+# contar keywords y volar de la tabla
+
+glimpse(articles)
 
 ```
 
@@ -153,11 +137,12 @@ Keywords, abstracts and other metadata had only minimal pre-processing (text tra
 
 [^1]: https://anystyle.io/
 
-Most of our research questions did not required more than descriptive statistics and visualization techniques. To express the author's collaboration we used Subramanyam Index (Subramanyam, 1983) that calculates the proportion of articles with +2 authors over the total of articles. To identify topics and key issues we performed topic modeling over the abstracts, using  the Latent Dirichlet Allocation model (D. Blei, Ng, & Jordan, 2003), via the XXXXX R package (Grün & Hornik, 2011), which posits different distributions of the corpus’ vocabulary as topics, and calculates the proportional mix of them for each document. Since the number of topics must be introduced as a parameter, after several runs and statistical tests with different parameters, we settled on a X topics solution. By **theoretically interpreting** representative documents for each of the topic detected, we formulated a taxonomy of X categories. ESTA ULTIMA ORACION ES UNA GAROMPA
+Most of our research questions did not required more than descriptive statistics and visualization techniques. To express the author's collaboration we used Subramanyam Index (Subramanyam, 1983) that calculates the proportion of articles with +2 authors over the total of articles. To identify topics and key issues we performed topic modeling over the abstracts, using  the Latent Dirichlet Allocation model (D. Blei, Ng, & Jordan, 2003), via the XXXXX R package (Grün & Hornik, 2011), which posits different distributions of the corpus’ vocabulary as topics, and calculates the proportional mix of them for each document. Since the number of topics must be introduced as a parameter, after several runs and statistical tests with different parameters, we settled on a X topics solution. By theoretically interpreting representative documents for each of the topic detected, we formulated a taxonomy of X categories. **ESTA ULTIMA ORACION ES UNA GAROMPA**
+
 
 # Results
 
-
+According to our dataset, 
 
 The total number of articles found was XXXX
 As it can be noted in Graph 1, the greatest production took place in the xxxxx
@@ -170,6 +155,16 @@ table(metadata %>% filter(tag=="year") %>% pull(value)) %>% plot()
 
 
 ## RQ1. Autores / Colaboracion
+
+
+**RQ1**. Production and authorship are the first issues we will be exploring. 
+
+Regarding production, in geographical terms, most of the consulted papers agree to highlight the dominance of People’s Republic of China (first place) and USA (second place), sharing near 50% of the different corpora. USA was leading the production up until 2015 approx, when China production exploded. These countries appear in inverse order only in the work of Kalatari et. al. (2017) and of Belmonte et. al. (2020), which includes a much larger and earlier timespan considered, and a broader set of search criteria. Following these are India, UK, France, Germany, South Korea, in different orders depending on the corpus. USA and China are the countries that collaborate the most, both between them and with other countries. Comparatively, Canada, Autralia, Switzerland and Japan show less production than the other aforementioned countries, but have a larger centrality in collaborations. South American, Middle-eastern, and African countries show the least level of production. 
+
+Institutional affiliation has been analyzed in far extent. Ahmad et. al. (2020) reports that Chinese institutions, such as Chinese Academy of Sciences and Tsinghua University, not only rank on top of the production but also in the concentration of papers per institution; USA production seems to be less concentrated. Again, Belmonte et. al. (2020) registered and inverse ranking, with Harvard and universities from California and Texas on top. Zhang et. al. (2019) highlights that world-class universities from USA, although not that prominent as Chinese institutions, are much more interconnected in terms of collaboration. Liu et. al. (2019) reported that only 2.8% of the papers of its dataset are produced jointly between academia and corporations. The authors conclude that "this finding is likely to indicate that, in the field of big data research, joint work contributed by both academia and industry is not popular". The corporate institutions that collaborate with academia the most are IBM, Intel and Microsoft.
+
+In terms of authorship, most of the works agree that collaboratory authorship is the standard practice by far: only near 10-15% of the papers were written by a single author, more than 40% have at least 4 authors, and even there's a 1-2% of the papers that have more than 10 authors. Liu et. al. (2019) also suggest that single authorship ranks last in terms of impact. Most papers also agree that single authorship is declining, and that there seems to be a trend toward including more authors. Finally, XXXX suggests that collaboratory authorship is a requirement in big data research because of the costs and the difficulty of the data gathering and processing tasks involved.
+
 
 ### Coautoria e Índice de Subramanyam (IS) 
 
@@ -535,6 +530,18 @@ autores2 %>% inner_join(
 
 ## RQ2. topicos y areas
 
+**RQ2**. Contents is the second issue to be explored. Most of the revised papers draw on keyword frequency and/or keyword correlation to identify topics and sub-areas of research. 
+
+As expected, "big data" is the single most used keyword in most of the datasets. The exception that proves the rule is found at Kalantari et. al. (2017), which include papers from 1980s and whose search criteria include big data among others, but still show it as the most used keyword in the range 2010-2015. Belmonti et. al. (2020), on the other hand, highlight the centrality of machine learning.
+Data-related tasks, such as mining, handling, storage, are the top keywords along with big data, according to Ahmad et. al. (2020). These are all general terms that originated in computer science but cannot be univocally confined to that space anymore. On the contrary, a topic that resides in computer science is the one that refer to tools and solutions for big data, such as Hadoop, MapReduce, or parallel and cloud computing. This is a topic that appear on most of the revised surveys. Authors agree that in the early days of big data the researchers focused mainly on its uses and applications, and on the technical challenges posed by it. 
+
+Business intelligence, a topic closely related to big data applications and big data analytics, also appears across the surveys. Keywords that most resemble this topic are decision making, commerce, information management, and (business sector) management. According to Liang & Liu (2018), by 2014 management was one on the top keywords along with data mining, data science, which could be indicative of this topic closeness with the previous one; more specific terms, like big data analytics, knowledge management and others appear later. These authors also suggest that big data corpus is much more technical than business inteligence which is more application-oriented.
+
+A third sub-area that appears on most surveys is related to analysis notions, such as machine learning, model, statistics, classification, or even artificial intelligence. Interestingly, most of these are topics that have been around for decades, whose keywords were the most frequent some years ago, and that lost prominence near 2015, but later resurged thanks to the re-discovery of their potential with big data. This trend has been registered by Kalantari et. al. (2019), Belmonte et. al. (2020), and Zhang et. al. (2019), who refer to some of these as "sleeping beauties". 
+
+Ahmad et. al. (2020), Zhang et. al. (2019) and Liang & Liu (2018) identified a final topic that deals with big data integration with novel technologies that provide new sources and streams of data, such as Internet of Things (IoT), bioinformatics and social big data (e.g., social networks and apps). These are all emerging topics, absent in earlier surveys like the one by Kalantari et. al. (2017), although a few analytical techniques that originated years ago, such as sentiment analysis, opinion mining, or anomaly detection, have been revamped. We should remark that this topic seems to be the first one to include some "social" issues and concerns, such as privacy protection and human/patient care. 
+
+Finally, Liang and Liu's (2018) paper include a brief report on social science and humanities corpus, constructed by subseting their big data and business intelligence corpus. The authors identified 10 topics by analyzing keywords and citation networks: the earliest incidence corresponds to medical-related issues, "where big data started in social sciences. It also echoes the fact that health care service is the most important field for big data applications"; the second topic, one that remains steady until 2015 (although it must be noted that their corpus is dated until 2017), renders big data as an emerging technology, referencing works like Kitchin (2014) that both presented the first comprehensive sociological analysis of big data and a critical programme for its analysis; another important topic is research on agenda setting, ilustrated with Lazer (2014), which spans between 2007 upto 2009. "In 2014, there were still many papers referring to agenda setting ... but almost none was cited after 2015. It may indicate that the studies involving agenda setting in big data had come to an end"; the rest of the topics they mention relate to business processes, and analysis techniques.
 
 
   * **RQ2.1** frecuencia de keywords
@@ -793,6 +800,18 @@ presentar como tabla de temas con topkeywords
 
 ## RQ3. Citation
 
+
+
+**RQ3**. The last issue we are interested in is citation, as a mean to identify influential works and venues.
+
+In terms of citation distribution, Ahmad et. al. (2020) report that over 50% of publications are not cited, and that 80% of citations are received by aprox. 15% of the publications. The authors highlight that this statistics resemble those reported by Garounsi and Mäntylä (2016) for software engineering. Similarly, Kalantari et. al. (2017) used the Essential Science Indicators (ESI) tool provided by Thomson Reuters to identify 28 highly cited papers out of their dataset of 6,572, and reported average citations of 126.75 against 4.97.
+
+Unsurprisingly, several of the papers reviewed report that the most cited works correspond to early survey papers, both on the general term of big data and on specific techniques, such as, "Big data: a survey" (Chen et. al., 2014), "Lexicon-based methods for sentiment analysis" (Taboada, et. al., 2011), or "Data mining with big data" (Wu et. al., 2014). These are all, arguably, technical papers that map the state of the art, and the upcoming challenges in the field.
+
+A few interesting exceptions are some critical analysis, reflections and/or experimentations drawing on big social data, such as the study on "emotional contagion" in Facebook (Kramer, 2014) or the uses of Google for health trends detection (Lazer, et. al., 2014). In these, controversy may play an important factor, because of the claims received about the lack of informed consent and the impossibility to opt-out of the experiment by the former, and the introduction about "big data hubris" in the latter. Another exception is the excellent "Critical Questions for Big Data" by danah boyd and Kate Crawford (2014), which poses concerns about big data mythology and possible missuses. 
+
+The predominance of computing and engineering papers is confirmed if we consult the top venues for publications, both in terms of citation and publication counts: Lecture Notes in Computer Science, Lecture notes in artificial intelligence, Proceedings of the VLDB Endowment, Bioinformatics, Procedia Computer Science, and the series published by IEEE. Top journals, with transdisciplinary orientation, such as Nature, Plos One, or the Proceedings of the National Academy of Sciences of the United States of America are also present. 
+
 ### top venues
 
 We identify the top 10 venues for publications in terms of number of citations. In addition, we also record the number of publication made in each venue. Lecture Notes in Computer Science (LNCS)2 received the most number of citations (3064), which published the most number of articles as well (2538). This resulted in 1.20 citations per publication. LNCS is followed by Proceedings of the VLDB Endowment which received 2369 citations for 99 publications. The top 15 venues based on absolute cita- tion counts are given in Table 5. The table also lists the number of publications and citations/publication for each venue. In terms of citations per publication, MIS Quar- terly: Management Information Systems ranks at the top. However, a close inspection of the data reveals that the MIS Quarterly: Management Information Systems has received 1111 citations for 5 publications. Out of 1111 citations, 1098 citations are for [13], whichmeans that the rest of4 publications received only 13 citations. Informa- tion Communication and Society ranks 2 based on citations/publication; however, one publication [9] accrued 999 citations, whereas the remaining 13 publications acquired 86 citations. Other top venues based on the citation/publication include Proceedings of the National Academy of Sciences of the United States ofAmerica (66.9), Nature (43.3), and IEEE Transactions on Knowledge and Data Engineering (31.78)
@@ -954,6 +973,7 @@ ref %>%
 
 Several papers have used bibliometric analysis to map the big data scientific production, with different goals and levels of analysis. With exception of a brief section from (), and to the best of our knowledge, this is the first study that focuses on social sciences, psychology and humanities, and provide a comparative view with the global production across disciplines.
 
+With exception of a brief section from (XXXXXXXX), and to the best of our knowledge, this is the first study that focuses on social sciences, psychology and humanities, and provide a comparative view with the global production across disciplines.
 
 **aportes del articulo**
 
