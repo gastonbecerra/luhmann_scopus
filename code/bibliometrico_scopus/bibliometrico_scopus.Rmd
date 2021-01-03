@@ -21,6 +21,7 @@ library(tidyverse)
 library(igraph)
 library(ggraph)
 library(tidygraph)
+library(gt)
 
 metadata <- readr::read_csv(file = "../../data/metadata.csv")
 ocr <- readr::read_csv(file = "../../data/ocr.csv")
@@ -46,7 +47,7 @@ references <- readRDS(file = "../../data/referencias/referencias.rds")
 # Introduction
 
 
-This work explores, through a bibliometric analysis, the scientific literature about "Big data" in social sciences, psychology and humanities. Working on a XXXX papers dataset retrieved from Scopus, we aim to identify trends about authorship and collaboration, topics and study areas, and the most influential works. Such objective is a particular step within a broader project aiming to compare how big data is thematized and framed in different social systems, such as mass media, science, politics, commerce, economics, among others (Becerra, 2018). 
+This work explores, through a bibliometric analysis, the scientific literature about "Big data" in social sciences, psychology and humanities. Working on a 5,500 papers dataset retrieved from Scopus, we aim to identify trends about authorship and collaboration, topics and study areas, and the most influential works. Such objective is a particular step within a broader project aiming to compare how big data is thematized and framed in different social systems, such as mass media, science, politics, commerce, economics, among others (Becerra, 2018). 
 
 The term "big data" originated in late 1990s in the IT sector, referring to the (technical) challenges of handling a vast amount of information (Diebold, XXXX). In a famous consultancy piece, Douglas Laney (2001) synthesized these challenges by referencing 3 v’s -volume, velocity, and variety-, a formula that expanded to include other v-words such as, visualization or value, and that usually takes the place of a definition. Ironizing this, "Vexatious vagueness" is the implicit last v-word, says Halavais (2015).
 
@@ -89,7 +90,7 @@ Our research questions are:
 # Related works
 
 
-Several papers have used bibliometric analysis to map the big data scientific production, with different goals and levels of analysis. The closest to our interests, and the most updated and comprehensive study, is Ahmad et. al. (2020). They analyzed 33,623 works from 2008 to 2017, retrieved via Scopus, by searching "big data" in title and keywords. They did not limit the literature search to computer science alone, but allowed results from social, medical and business sciences. In fact, the only limit reported is English as language, and the exclusion of conference review, editorial notes, and letters document types. Their main objective was to spot top cited papers, the contributions of countries, and to identify key research areas. 
+Several papers have used bibliometric analysis to map the big data scientific production, with different goals and levels of analysis. The closest to our interests, and the most updated and comprehensive study, is Ahmad et. al. (2020). They analyzed 33,623 works from 2008 to 2017, retrieved via Scopus, by searching "big data" in title and keywords. They did not limit the literature search to computer science alone, but allowed results from social, medical and business sciences. In fact, the only limit reported is English as language, and the exclusion of conference review, editorial notes, and letters document types. Their main objective was to spot top cited papers, the contributions of countries, and to identify key research areas.
 
 Drawing also on Scopus, Liu et. al. (2019) conducted a bibliometric analysis in a set of 4,070 articles published between 2013 and 2018. Besides analyzing trends in production and collaboration across countries and institutions, they used Scopus' SciVal to evaluate the performance of the papers and calculated field-weighted citation impact. 
 
@@ -99,7 +100,7 @@ Drawing on 5,840 articles retrieved Web of Science (WoS) covering the period bet
 
 Belmonte et. al. (2020) review 4,240 papers related to big data and machine learning for the period 2010-2019, indexed in Web of Science (WoS). Their focus was on performance of these works, using bibliometric indicators such as h-index, g, and others, in a dynamic view that tried to analyze the path and projection of both terms. The authors concluded that machine learning is the topic with the highest bibliometric levels, and the one that most probably will be driving the research enterprise, even above big data.
 
-Finally, Liang and Liu (2018) analyzed 10,637 publications associated with big data and 1,168 publications associated with business intelligence, retrieved from Social Science Citation Index, Science Citation Index Expanded and Arts & Humanities Citation Index for 1990 to 2017. They performed a dynamical analysis to find trends about emerging topics and explore their disciplinary distribution. Further, they subset their corpus, and focused on 2,819 papers from social sciences and humanities journals to explore -although very briefly- topics and citations. To the best of our knowledge this is the only work that has focused -at least partially- on the disciplines we are interested in.
+Finally, Liang and Liu (2018) analyzed 10,637 publications associated with big data and 1,168 publications associated with business intelligence, retrieved from Social Science Citation Index, Science Citation Index Expanded and Arts & Humanities Citation Index for 1990 to 2017. They performed a dynamical analysis to find trends about emerging topics and explore their disciplinary distribution. Further, they subset their corpus, and focused on 2,819 papers from social sciences and humanities journals to explore topics and citations. To the best of our knowledge this is the only work that has focused, although briefly and partially, on the disciplines we are interested in.
 
 Besides these general reviews, there are several studies that focus on specific areas and topics related to big data. 
 E.g., Both Mishra et. al. (2018) and Inamdar et. al. (2020) performed bibliometrics and in-depth literature review concerning big data and big data analitycs adoption for supply chain management and related areas, with datasets of 286 articles published in 2006-2016 and retrieved via Scopus, and 79 papers published between 2014-2018 retrieved via Web of Science (WoS); 
@@ -112,22 +113,24 @@ In the Results section we compare and synthesize these works regarding authorshi
 
 We selected the database Scopus to construct our corpus because it offered both complete metadata, abstracts, and references for the articles. Others databases, such as Jstor and Ebsco, were also explored but, although full-text content was available in some cases, the number of articles was far less, and lacked of several abstracts and references. 
 
-For the search we used the criteria "big data" in title, abstracts, and keywords. We limited the subject area to social sciences, psychology and humanities and arts, the language to English, and the publication type to journal articles. The dataset was exported the first of December of 2020. Although initially no date limits were applied, most of the publications were comprised between 2010-2020. From the original result of 5,610 records, we kept XXXX that were included in this shorter timespan, and had no incomplete information about authors and journal. 
+For the search we used the criteria "big data" in title, abstracts, and keywords. We limited the subject area to social sciences, psychology and humanities and arts, the language to English, and the publication type to journal articles. The dataset was exported the first of December of 2020. Although initially no date limits were applied, most of the publications were comprised between 2010-2020. From the original result of 5,610 records, we kept 5,500 that were included in this shorter timespan, and had abstracts. 
 
 ```{r prepro, echo=FALSE, message=FALSE, warning=FALSE}
 
-glimpse(metadata)
-table(metadata$tag)
-metadata %>% filter(tag=="year") %>% count(value)
-source("9_sample_stats.R", local = knitr::knit_global())
-
+keywords <- metadata %>% filter(tag=="keyword")
 articles <- metadata %>%
   select(-source) %>% 
-  pivot_wider(id_cols = id, names_from = tag, values_from = value) 
-
-articles <- metadata %>% group_by(id) %>% nest()
-
-# contar keywords y volar de la tabla
+  filter(!tag == "keyword") %>%
+  pivot_wider(id_cols = id, names_from = tag, values_from = value) %>%
+  left_join(keywords %>% count(id) %>% rename(keywords=n)) %>%
+  mutate(
+    year=as.integer(year),
+    cited=as.integer(cited)
+    ) %>%
+  filter(
+    year>=2010,
+    !is.na(abstract)
+    )
 
 glimpse(articles)
 
@@ -137,165 +140,186 @@ Keywords, abstracts and other metadata had only minimal pre-processing (text tra
 
 [^1]: https://anystyle.io/
 
-Most of our research questions did not required more than descriptive statistics and visualization techniques. To express the author's collaboration we used Subramanyam Index (Subramanyam, 1983) that calculates the proportion of articles with +2 authors over the total of articles. To identify topics and key issues we performed topic modeling over the abstracts, using  the Latent Dirichlet Allocation model (D. Blei, Ng, & Jordan, 2003), via the XXXXX R package (Grün & Hornik, 2011), which posits different distributions of the corpus’ vocabulary as topics, and calculates the proportional mix of them for each document. Since the number of topics must be introduced as a parameter, after several runs and statistical tests with different parameters, we settled on a X topics solution. By theoretically interpreting representative documents for each of the topic detected, we formulated a taxonomy of X categories. **ESTA ULTIMA ORACION ES UNA GAROMPA**
+Most of our research questions did not required more than descriptive statistics and visualization techniques. To express the author's collaboration we used Subramanyam Index (Subramanyam, 1983) that calculates the proportion of articles with +2 authors over the total of articles. Institutional affiliation required some parsing to identify it as "academic" or "corporation". We used "universi|college|school|institu|academ|politec" search criteria for this purpose. To identify topics and key issues we performed topic modeling over the abstracts, using  the Latent Dirichlet Allocation model (D. Blei, Ng, & Jordan, 2003), via the XXXXX R package (Grün & Hornik, 2011), which posits different distributions of the corpus’ vocabulary as topics, and calculates the proportional mix of them for each document. Since the number of topics must be introduced as a parameter, after several runs and statistical tests with different parameters, we settled on a X topics solution. By theoretically interpreting representative documents for each of the topic detected, we formulated a taxonomy of X categories. **ESTA ULTIMA ORACION ES UNA GAROMPA**
 
 
 # Results
 
-According to our dataset, 
-
-The total number of articles found was XXXX
-As it can be noted in Graph 1, the greatest production took place in the xxxxx
+According to the surveys, big data literature has grown yearly in over a X2 rate for the 2010-2014 range, then this trend has slowed down near 2015, and up 2020 the number of papers per year never decreased (e.g., Belmonte, et. al., 2020; Liu et. al., 2019). Our dataset follows this general trend.
 
 ```{r tiempo, echo=FALSE, message=FALSE, warning=FALSE}
 
-table(metadata %>% filter(tag=="year") %>% pull(value)) %>% plot()
+articles %>% count(year) %>% 
+  mutate(source="Own elaboration") %>%
+  ggplot(aes(x=year,y=n)) + # , color=source
+  geom_line() + 
+  geom_point() +
+  geom_label(aes(label=n)) +
+  theme_minimal() +
+  scale_x_continuous(name="Years", 
+                     breaks = c(2010:2020), 
+                     labels = c(2010:2020),
+                     minor_breaks = NULL) +
+  scale_y_continuous(name="Number of Publications") + 
+  labs(caption="Figure 1. Evolution of scientific production in soc. sci. & humanities") + 
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1)))
+
+ir_own <- articles %>% count(year) %>% pull(n)
+names(ir_own) <- 2010:2020
+
+ir_liu <- c("2013"=101, "2014"=208, "2015"=555, "2016"=809, "2017"=1052, "2018"=1273)
+ir_belmonte <- c("2010"=1, "2011"=1, "2012"=15, "2013"=58, "2014"=176, "2015"=352, "2016"=547, "2017"=785, "2018"=1152, "2019"=1166)
+
+increase_rate <- function(v) {
+  return(( v - lag(x = v, n = 1) ) / lag(x = v, n = 1) *100)
+}
+
+l=list(increase_rate(ir_own),increase_rate(ir_liu),increase_rate(ir_belmonte))
+ir <- do.call(rbind, lapply(l, function(x) x[match(names(l[[1]]), names(x))])) %>% as.data.frame()
+rownames(ir) = c("Own elaboration","Liu, et. al., 2019","Belmonte, et. al., 2020")
+
+ir %>% rownames_to_column() %>% 
+  gt() %>% 
+  fmt_percent(columns = everything(), decimals = 2, scale_values = FALSE) %>%
+  fmt_missing(columns = everything(), missing_text = "-") %>%
+  tab_header(
+    title = "% Yearly increase of scientific production in different corpora"
+  ) %>%
+  tab_options(
+    table.font.size = "11px"
+  ) 
+
+rm(ir_own,ir_liu,ir_belmonte,l,increase_rate,ir)
 
 ```
 
 
-## RQ1. Autores / Colaboracion
+## RQ1. Authorship and collaboration trends
 
 
-**RQ1**. Production and authorship are the first issues we will be exploring. 
+According to the general big data literature, in terms of production by countries,  People’s Republic of China leads the ranking, followed by USA, sharing near 50% of the different corpora. USA was leading the production up until 2015 approx, when China production exploded. These countries appear in inverse order only in Kalatari et. al. (2017) and Belmonte et. al. (2020), which includes a much larger and earlier timespan considered, and a broader set of search criteria. Following these are India, UK, France, Germany, South Korea, in different orders depending on the corpus. USA and China are the countries that collaborate the most, both between them and with other countries. Comparatively, Canada, Autralia, Switzerland and Japan show less production than the other aforementioned countries, but have a larger centrality in collaborations. South American, Middle-eastern, and African countries show the least level of production. 
 
-Regarding production, in geographical terms, most of the consulted papers agree to highlight the dominance of People’s Republic of China (first place) and USA (second place), sharing near 50% of the different corpora. USA was leading the production up until 2015 approx, when China production exploded. These countries appear in inverse order only in the work of Kalatari et. al. (2017) and of Belmonte et. al. (2020), which includes a much larger and earlier timespan considered, and a broader set of search criteria. Following these are India, UK, France, Germany, South Korea, in different orders depending on the corpus. USA and China are the countries that collaborate the most, both between them and with other countries. Comparatively, Canada, Autralia, Switzerland and Japan show less production than the other aforementioned countries, but have a larger centrality in collaborations. South American, Middle-eastern, and African countries show the least level of production. 
+Our results[^2] shows USA on top of the ranking for scientific production regarding big data in the social sciences and humanities. China is in second place, although its production spiked up after 2018, surpassing USA in 2020. 
 
-Institutional affiliation has been analyzed in far extent. Ahmad et. al. (2020) reports that Chinese institutions, such as Chinese Academy of Sciences and Tsinghua University, not only rank on top of the production but also in the concentration of papers per institution; USA production seems to be less concentrated. Again, Belmonte et. al. (2020) registered and inverse ranking, with Harvard and universities from California and Texas on top. Zhang et. al. (2019) highlights that world-class universities from USA, although not that prominent as Chinese institutions, are much more interconnected in terms of collaboration. Liu et. al. (2019) reported that only 2.8% of the papers of its dataset are produced jointly between academia and corporations. The authors conclude that "this finding is likely to indicate that, in the field of big data research, joint work contributed by both academia and industry is not popular". The corporate institutions that collaborate with academia the most are IBM, Intel and Microsoft.
+[^2]: Following Kalantari et. al. (2017) we sum each individual author's affiliation and country to achieve this result.
 
-In terms of authorship, most of the works agree that collaboratory authorship is the standard practice by far: only near 10-15% of the papers were written by a single author, more than 40% have at least 4 authors, and even there's a 1-2% of the papers that have more than 10 authors. Liu et. al. (2019) also suggest that single authorship ranks last in terms of impact. Most papers also agree that single authorship is declining, and that there seems to be a trend toward including more authors. Finally, XXXX suggests that collaboratory authorship is a requirement in big data research because of the costs and the difficulty of the data gathering and processing tasks involved.
+```{r paises, echo=FALSE, fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
 
-
-### Coautoria e Índice de Subramanyam (IS) 
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
-# cantidad de autores
-autores %>% group_by(id) %>% 
-  summarize(n=n()) %>% 
-  group_by(n) %>% summarise(f=n()) %>% plot()
-
-# mas de 10 autores
-autores %>% group_by(id) %>% 
-  summarize(n=n()) %>% filter(n>10) %>% arrange(desc(n)) %>% pull(id)
-
-# promedio de autores por año
-autores %>% left_join(
-  metadata %>% filter(tag=="year") %>%
-    select(id,year=value)) %>% 
-  group_by(year,id) %>% summarise(n=n()) %>%
-  group_by(year) %>% summarise(avg=mean(n))
-
-# cuantos autores por año
-autores %>% left_join(
-  metadata %>% 
-    filter(tag=="year") %>%
-    select(id,year=value)) %>% 
-  group_by(year,id) %>% summarise(autores=n()) %>%
-  group_by(year,autores) %>% summarise(f=n()) %>%
-  ggplot(aes(y=f,x=autores)) + geom_col() + facet_wrap(~year,scales = "free_y")
+autores %>% 
+  left_join( articles ) %>%
+  filter(!is.na(pais), year>=2010) %>% 
+  count(pais, year, sort = TRUE) %>% 
+  group_by(pais) %>% mutate(
+    total_papers=sum(n),
+    anios=n()
+    ) %>% ungroup() %>%
+    mutate(pais=paste(str_to_title(pais), " (n=", total_papers, ")", sep = "")) %>%
+    filter(total_papers>50) %>%
+    ggplot(aes(x=year,y=reorder(pais,total_papers),fill=n)) + 
+      geom_tile() +
+      geom_text(aes(label=n), color="white", show.legend = FALSE, size=3) +
+      theme_minimal() +
+      scale_x_continuous(name="Years", 
+                     breaks = c(2010:2020), 
+                     labels = c(2010:2020),
+                     minor_breaks = NULL) +
+  scale_fill_gradient(low="lightblue", high="red") +
+  labs(caption="Figure 2. Production by country and year (countries with n > 50)") +
+  theme(axis.title.y=element_blank()) +
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1)))
 
 ```
 
-For the complete time frame (2008 − 2017), the average number of authors per
-publication is 3.45 with a standard deviation of 2.34. 13.67% of articles are
-published with a single authorship, and 41% of articles have more than the
-average number of authors, i.e., 41% of publications have at least 4 authors.
-The surprising aspect of the findings is the share of publications with more
-than 10 authors. We found that 1% of the papers have more than 10 authors.
-Fig. 4 summarizes the number of authors per publication distribution.
+Going back to the general big data research literature, iInstitutional affiliation has been analyzed in far less extent. Ahmad et. al. (2020) reports that Chinese institutions, such as Chinese Academy of Sciences and Tsinghua University, not only rank on top of the production but also in the concentration of papers per institution; USA production seems to be less concentrated. Again, Belmonte et. al. (2020) registered and inverse ranking, with Harvard and universities from California and Texas on top. Zhang et. al. (2019) highlights that world-class universities from USA, although not that prominent as Chinese institutions, are much more interconnected in terms of collaboration. Liu et. al. (2019) reported that only 2.8% of the papers of its dataset are produced jointly between academia and corporations. The authors conclude that "this finding is likely to indicate that, in the field of big data research, joint work contributed by both academia and industry is not popular". The corporate institutions that collaborate the most with academia are IBM, Intel and Microsoft.
 
-We also analyzed the evolution of number of authors per research publications over the selected time frame. We observe that during the initial years
-(2008 − 2012) 27% of publications have single authorship. During the later
-years, the single authorship trend declines. In 2016 only 11.6% of papers have
-single authorship, the minimum for the selected time frame. Fig. 5 depicts the
-authorship trends for the time frame. It should be noted that as the number of publications are significantly lower for initial years, the data for years
-2008 − 2012 is combined for reporting purposes
+If we analyze our dataset, the collaboration between academia and corporate (Fig. 3) seems to be growing slowly within social sciences and humanities. Top institutions, in terms of affiliation of authors (Fig. 4), are the same as registered in the general big data field, although in different order, reflecting the dominance of USA.
 
----> aca sube la produccion y la cantidad de autores por articulo 
-(ultimos años 1 no es el mas alto )
+```{r acc, echo=FALSE, message=FALSE, warning=FALSE}
 
-(se puede poner la media como linea vertical en cada año?)
+academicAff <- "universi|college|school|institu|academ|politec"
 
-INDICE DE XXXX
+cleanAff <- function(txt) {
+  z <- c()
+  for(i in 1:length(txt)){
+    if (!is.na(txt)){
+      txt2 <- str_split(string = txt[i], pattern = ",", simplify = TRUE) %>%
+        as.character()
+      txt3 <- grepl(
+          pattern = academicAff, 
+          txt2, ignore.case = TRUE)
+      if(TRUE %in% txt3) {
+        z <- c(z, trimws(txt2[max(which(txt3==TRUE))]))  
+      } else {
+        z <- c(z, trimws(txt2[1]))
+      }
+    } else {
+      z <- c(z, NA)
+    }
+  } 
+  return(z)  
+}
 
-Corresponde a la proporción de artículos con autoría múltiple (2 o más autores).
+autores2 <- autores %>% 
+  left_join(articles %>% select(id,year)) %>% filter(year>=2010) %>%
+  filter(!is.na(aff)) %>%
+  mutate(
+    uni = grepl(
+      pattern = academicAff, 
+      aff, ignore.case = TRUE),
+    aff2 = cleanAff(aff)
+    ) 
 
-Se calcula a partir de la siguiente ecuación:
+acc <- autores2 %>% count(id,uni) %>% 
+  pivot_wider(names_from = uni, values_from = n) %>%
+  rename(academy=2,private=3) %>%
+  mutate( acc=case_when(
+    !is.na(academy) & !is.na(private) ~ "ACC",
+    !is.na(academy) & is.na(private) ~ "Only academia",
+    is.na(academy) & !is.na(private) ~ "Only corporate"
+    )
+  )
 
-IS = Nm / Nm + Ns
+acc %>% 
+  left_join(articles %>% select(id,year)) %>% filter(year>=2010) %>%
+  count(acc, year) %>%  # cuantos puros y cuantos acc
+  ggplot(aes(x=year,y=n,fill=acc)) +
+    geom_col(position = "fill", stat = "identity") +
+    labs(fill = "Autorship Type")+
+  theme_minimal() +
+      scale_x_continuous(name="Years", 
+                     breaks = c(2010:2020), 
+                     labels = c(2010:2020),
+                     minor_breaks = NULL) +
+  labs(caption="Figure 3. Distribution of autorship type") +
+  theme(axis.title.y=element_blank()) +
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1)))
 
-donde:
-Nm = Número de artículos con autoría múltiple
-Ns = Número de artículos con autoría simple (1 autor)
-El valor máximo que puede alcanzar este índice es 1 y corresponde a que todos
-los artículos publicados por la revista tienen al menos dos autores
+autores2 %>% 
+  mutate(inst_type=case_when(
+    uni ~ "Academia",
+    !uni ~ "Corporate"
+    )) %>%
+  left_join(articles %>% select(id,year)) %>% filter(year>=2010) %>%
+  count(inst_type,aff2) %>% 
+  group_by(inst_type) %>% 
+  mutate(aff2=str_to_title(str_sub(aff2,1,30))) %>%
+  slice_max(n = 10, order_by=n) %>%
+  ggplot(aes(y=n,x=reorder(aff2,n))) + geom_col() +
+  coord_flip() +
+  facet_wrap(~inst_type, scales = "free")+
+  theme(axis.title.x=element_blank(), 
+        axis.title.y=element_blank()) +    
+  theme_minimal() +
+  theme(legend.position = "none")+
+  labs(caption="Figure 4. Top 10 affiliations by number of papers, in academia and corporate") +
+  theme(axis.title.y=element_blank()) +
+  theme(plot.caption = element_text(hjust=0.5, size=rel(1)))
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# cuantos autores por año
-subra <- autores %>% left_join(
-  metadata %>% 
-    filter(tag=="year") %>%
-    select(id,year=value)) %>% 
-  group_by(year,id) %>% summarise(autores=n()) %>%
-  group_by(year,autores) %>% summarise(f=n()) %>%
-  pivot_wider(names_from = year, values_from=f) %>% arrange(autores) 
-
-print("Número de Artículos Distribuidos Según Número de Autores y por Período")
-subra %>% janitor::adorn_totals(where = c("row","col")) 
-
-# colSums(subra[,1:10], na.rm = TRUE) 
-Ns <- colSums(subra[which(subra$autores==1),2:14], na.rm = TRUE)
-Nm <- colSums(subra[which(subra$autores>1),2:14], na.rm = TRUE)
-Nm / (Nm+Ns)
-
-# estoy hay que integrarlo a la tabla anterior y agrupar los numeros de autores
+rm(acc, academicAff, cleanAff, autores2)
 
 ```
-
-Consistente con la idea de una tendencia hacia la colaboración, el índice de Subramanyam (IS), que calcula la proporción de artículos con dos o más autores sobre el total de documentos, muestra el progresivo incremento en la proporción de artículos en colaboración, desde un 54% en el período 1992-1996 hasta un 82% en el período 2012-2016. Por otra parte, el índice de Lawani (IL) permite complementar la noción acerca de la colaboración, calculando la media ponderada de autores por artículo en cada período. En este sentido, los resultados indican que junto con un incremento en la cantidad de artículos en coautoría, el incremento en la colaboración se ha traducido en un mayor número de autores por artículo, pasando de 1,9 autores en el período 1992-1996 a 3,4 en el período 2012-2016 (ver Tabla 3). Tomados en conjunto, ambos índices sugieren que no solo ha aumentado la proporción de artículos en los que aparecen dos o más autores firmantes, sino que también ha aumentado el número de autores firmantes por artículo.
 
 ### Colaboración entre paises
-
-antes que nada: Which countries and institutions have contributedmost in terms ofpublications count?
-
-**2do:esto se puede pasar a un mapa**
-
-e.g.,
-Kalantari, A., Kamsin, A., Kamaruddin, H. S., Ale Ebrahim, N., Gani, A., Ebrahimi, A., & Shamshirband, S. (2017). A bibliometric approach to tracking big data research trends. Journal of Big Data, 4(1), 1–18. https://doi.org/10.1186/s40537-017-0088-1 p9
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-
-autores %>% 
-  filter(!is.na(pais)) %>%
-  count(pais, sort = TRUE) %>% 
-  head(30) %>%
-  ggplot(aes(y=n,x=reorder(pais,n))) + geom_col() +
-  coord_flip() +
-  labs(title="ranking +30 paises")
-
-# autores %>% 
-#   left_join(
-#   metadata %>% 
-#     filter(tag=="year") %>%
-#     select(id,year=value)) %>%
-#   filter(!is.na(pais)) %>%
-#   count(pais, year, sort = TRUE) %>% 
-#   pivot_wider(names_from = year, values_from=n) %>%
-#   head(10)
-
-autores %>% 
-  left_join(
-  metadata %>% 
-    filter(tag=="year") %>%
-    select(id,year=value)) %>%
-  filter(!is.na(pais)) %>% 
-  count(pais, year, sort = TRUE) %>% 
-    filter(n>1) %>%
-    ggplot(aes(x=year,y=pais,fill=n)) + geom_tile()
-
-```
-
 
 ```{r colaboracion-mapa}
 
@@ -431,101 +455,99 @@ ggplot(nodes) + country_shapes +
 
 
 
-### ranking afiliaciones
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+In terms of authorship, most of the works agree that collaboratory authorship is the standard practice by far: only near 10-15% of the papers were written by a single author, more than 40% have at least 4 authors, and even there's a 1-2% of the papers that have more than 10 authors. Liu et. al. (2019) also suggest that single authorship ranks last in terms of impact. Most papers also agree that single authorship is declining, and that there seems to be a trend toward including more authors. Finally, XXXX suggests that collaboratory authorship is a requirement in big data research because of the costs and the difficulty of the data gathering and processing tasks involved.
 
-academicAff <- "universi|college|school|institu|academ|politec"
 
-cleanAff <- function(txt) {
-  z <- c()
-  for(i in 1:length(txt)){
-    if (!is.na(txt)){
-      txt2 <- str_split(string = txt[i], pattern = ",", simplify = TRUE) %>%
-        as.character()
-      txt3 <- grepl(
-          pattern = academicAff, 
-          txt2, ignore.case = TRUE)
-      if(TRUE %in% txt3) {
-        z <- c(z, trimws(txt2[max(which(txt3==TRUE))]))  
-      } else {
-        z <- c(z, trimws(txt2[1]))
-      }
-    } else {
-      z <- c(z, NA)
-    }
-  } 
-  return(z)  
-}
+### Coautoria e Índice de Subramanyam (IS) 
 
-autores2 <- autores %>% 
-  filter(!is.na(aff)) %>%
-  mutate(
-    uni = grepl(
-      pattern = academicAff, 
-      aff, ignore.case = TRUE),
-    aff2 = cleanAff(aff)
-    ) 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-autores2 %>% count(uni,sort=TRUE) 
+# cantidad de autores
+autores %>% group_by(id) %>% 
+  summarize(n=n()) %>% 
+  group_by(n) %>% summarise(f=n()) %>% plot()
 
-autores2 %>% 
-  count(uni,aff2) %>% group_by(uni) %>% 
-  mutate(aff2=str_sub(aff2,1,15))%>%
-  slice_max(n = 20, order_by=n) %>%
-  ggplot(aes(y=n,x=reorder(aff2,n),fill=uni)) + geom_col() +
-  coord_flip() +
-  facet_wrap(~uni,scales = "free")+
-  labs(title="ranking universidades y empresas")
+# mas de 10 autores
+autores %>% group_by(id) %>% 
+  summarize(n=n()) %>% filter(n>10) %>% arrange(desc(n)) %>% pull(id)
 
-autores2 %>% 
-  filter(!is.na(aff)) %>%
-  count(aff2, uni, sort = TRUE) %>% 
-  mutate(aff2=str_sub(aff2,1,15))%>%
-  ggplot(aes(y=n,x=reorder(aff2,n),fill=uni)) + geom_col() +
-  facet_wrap(~uni,scales = "free")+
-  labs(title="ranking +30 aff que son o no universidades")+
-  coord_flip()
+# promedio de autores por año
+autores %>% left_join(
+  metadata %>% filter(tag=="year") %>%
+    select(id,year=value)) %>% 
+  group_by(year,id) %>% summarise(n=n()) %>%
+  group_by(year) %>% summarise(avg=mean(n))
 
-# en todos estos calculos hay que ver si estamos hablando de instituciones
-# o de investigadores en instituciones
+# cuantos autores por año
+autores %>% left_join(
+  metadata %>% 
+    filter(tag=="year") %>%
+    select(id,year=value)) %>% 
+  group_by(year,id) %>% summarise(autores=n()) %>%
+  group_by(year,autores) %>% summarise(f=n()) %>%
+  ggplot(aes(y=f,x=autores)) + geom_col() + facet_wrap(~year,scales = "free_y")
 
 ```
 
-### Colaboración académica-corporativa
+For the complete time frame (2008 − 2017), the average number of authors per
+publication is 3.45 with a standard deviation of 2.34. 13.67% of articles are
+published with a single authorship, and 41% of articles have more than the
+average number of authors, i.e., 41% of publications have at least 4 authors.
+The surprising aspect of the findings is the share of publications with more
+than 10 authors. We found that 1% of the papers have more than 10 authors.
+Fig. 4 summarizes the number of authors per publication distribution.
 
-Co-authorship by ACC. Among the collaborative papers, 112 (2.8 percent) are
-produced through the manner of ACC. Due to the small amount of publications on this topic, this finding is likely to indicate that, in the field of big data research, joint work contributed by both academia and industry is not popular. 
-Table I outlines the top 10 institutions and countries/regions in the form of ACC publication. As listed in Table I, six of the institutions are affiliated with the USA, whereas the other four are relevant to China and Switzerland. In terms of countries, the USA ranks at the top with over half ACC publications (60/54 percent). China (24/21 percent), the UK (14/13 percent) and Canada (12/11 percent) have published more than ten ACC articles. The countries do not have a big representation in ACC articles.
+We also analyzed the evolution of number of authors per research publications over the selected time frame. We observe that during the initial years
+(2008 − 2012) 27% of publications have single authorship. During the later
+years, the single authorship trend declines. In 2016 only 11.6% of papers have
+single authorship, the minimum for the selected time frame. Fig. 5 depicts the
+authorship trends for the time frame. It should be noted that as the number of publications are significantly lower for initial years, the data for years
+2008 − 2012 is combined for reporting purposes
 
+---> aca sube la produccion y la cantidad de autores por articulo 
+(ultimos años 1 no es el mas alto )
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+(se puede poner la media como linea vertical en cada año?)
 
-acc <- autores2 %>% count(id,uni) %>% 
-  pivot_wider(names_from = uni, values_from = n) %>%
-  rename(academy=2,private=3) %>%
-  mutate( acc=case_when(
-    !is.na(academy) & !is.na(private) ~ "acc",
-    !is.na(academy) & is.na(private) ~ "pure_academy",
-    is.na(academy) & !is.na(private) ~ "pure_private"
-    )
-  )
+INDICE DE XXXX
 
-acc %>% count(acc)  # cuantos puros y cuantos acc
+Corresponde a la proporción de artículos con autoría múltiple (2 o más autores).
 
-autores2 %>% inner_join(
-    acc %>% select(id,acc)
-  ) %>%
-  filter(acc=="acc") %>%
-  count(uni,aff2) %>% group_by(uni) %>% 
-  slice_max(n = 20, order_by=n) %>%
-  mutate(aff2=str_sub(aff2,1,15))%>%
-  ggplot(aes(y=n,x=reorder(aff2,n),fill=uni)) + geom_col() +
-  coord_flip() +
-  facet_wrap(~uni,scales = "free_y")+
-  labs(title="top instituciones que hacen ACC")
+Se calcula a partir de la siguiente ecuación:
+
+IS = Nm / Nm + Ns
+
+donde:
+Nm = Número de artículos con autoría múltiple
+Ns = Número de artículos con autoría simple (1 autor)
+El valor máximo que puede alcanzar este índice es 1 y corresponde a que todos
+los artículos publicados por la revista tienen al menos dos autores
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# cuantos autores por año
+subra <- autores %>% left_join(
+  metadata %>% 
+    filter(tag=="year") %>%
+    select(id,year=value)) %>% 
+  group_by(year,id) %>% summarise(autores=n()) %>%
+  group_by(year,autores) %>% summarise(f=n()) %>%
+  pivot_wider(names_from = year, values_from=f) %>% arrange(autores) 
+
+print("Número de Artículos Distribuidos Según Número de Autores y por Período")
+subra %>% janitor::adorn_totals(where = c("row","col")) 
+
+# colSums(subra[,1:10], na.rm = TRUE) 
+Ns <- colSums(subra[which(subra$autores==1),2:14], na.rm = TRUE)
+Nm <- colSums(subra[which(subra$autores>1),2:14], na.rm = TRUE)
+Nm / (Nm+Ns)
+
+# estoy hay que integrarlo a la tabla anterior y agrupar los numeros de autores
 
 ```
+
+Consistente con la idea de una tendencia hacia la colaboración, el índice de Subramanyam (IS), que calcula la proporción de artículos con dos o más autores sobre el total de documentos, muestra el progresivo incremento en la proporción de artículos en colaboración, desde un 54% en el período 1992-1996 hasta un 82% en el período 2012-2016. Por otra parte, el índice de Lawani (IL) permite complementar la noción acerca de la colaboración, calculando la media ponderada de autores por artículo en cada período. En este sentido, los resultados indican que junto con un incremento en la cantidad de artículos en coautoría, el incremento en la colaboración se ha traducido en un mayor número de autores por artículo, pasando de 1,9 autores en el período 1992-1996 a 3,4 en el período 2012-2016 (ver Tabla 3). Tomados en conjunto, ambos índices sugieren que no solo ha aumentado la proporción de artículos en los que aparecen dos o más autores firmantes, sino que también ha aumentado el número de autores firmantes por artículo.
+
 
 
 ## RQ2. topicos y areas
