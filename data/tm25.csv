@@ -1,0 +1,26 @@
+Topic,Top words from TM,Top keywords from 100 first papers,Topic label,Group
+19,"research, method, issue, analysis, approach","big data, mixed methods, caqdas, computerassisted text analysis, corpus linguistics",Qualitative analysis and mix methods,"1. Methodology, mix methods and techniques"
+9,"social, author, article, practice, argue","big data, data, knowledge, gender",Epistemology of big (social) data,"2. Philosophy, epistemology, ethics, theory"
+14,"travel, city, urban, spatial, pattern","guangdong, mobile phone, big data, china, commuting",Mobility,"3. Policy, politics, smart city"
+10,"cloud, system, process, propose, compute","big data, cloud computing, mapreduce, spark, csp",Infrastructure for big data,"1. Methodology, mix methods and techniques"
+8,"information, research, paper, field, literature","big data, bibliometric analysis, big data research, visualization, citation analysis",Big data as literature field,"2. Philosophy, epistemology, ethics, theory"
+12,"industry, technology, management, business, organization","big data, big data analytics, firm performance, advanced analytics, ambidexterity",Management,4. Business and industry
+15,"social, network, user, medium, twitter","big data, twitter, internet, social media, computational social science",Big social data,"1. Methodology, mix methods and techniques"
+16,"information, algorithm, feature, method, propose","big data, data mining, machine learning, classification of information, evolutionary algorithms",Techniques,"1. Methodology, mix methods and techniques"
+11,"model, method, prediction, variable, predict","big data, artificial neural network, consistency, deep learning, era of big data and iot",Techniques,"1. Methodology, mix methods and techniques"
+5,"privacy, personal, ethical, protection, individual","big data, privacy, consent, data privacy","Data rights, privacy, protection","2. Philosophy, epistemology, ethics, theory"
+4,"learn, analytics, process, design, tool","machine learning, data mining, data science, discovery, educational data mining",Techniques,"1. Methodology, mix methods and techniques"
+21,"science, scientific, research, theory, scientist","big data, article, ethics, philosophy, data set",Epistemology of big (social) data,"2. Philosophy, epistemology, ethics, theory"
+1,"technology, digital, right, surveillance, article","big data, internet of things, smart, autonomous, connected",IoT / Automation / Surveillance,"3. Policy, politics, smart city"
+25,"service, policy, public, citizen, government","big data, innovation, internet, china, creative economy",Policy / Government,"3. Policy, politics, smart city"
+13,"learn, education, student, teach, educational","big data, mathematics, students, curriculum, education",Education,5. Social issues
+2,"city, smart, urban, paper, development","smart sustainable cities, sustainable cities, compact cities, smart city, sustainable development",Urbanity / Sustainability,"3. Policy, politics, smart city"
+17,"service, customer, tourism, consumer, online","big data, literature review, network analysis, semantic network analysis, consumption behavior",Hospitality / Customer relations,4. Business and industry
+18,"health, healthcare, care, medical, patient","bipolar disorder, comorbidity, aged, comparative effectiveness, veteran",Health,5. Social issues
+23,"algorithm, technology, intelligence, human, artificial","big data, artificial intelligence, climate change, complexity, freedom",Politics / Human relations,"3. Policy, politics, smart city"
+22,"analysis, corpus, text, language, word","big data, human, male, female, humans",Qualitative analysis and gender bias,"1. Methodology, mix methods and techniques"
+20,"land, spatial, map, index, image","evapotranspiration, satellite data, big data, climate change, financial crisis",Climate,5. Social issues
+7,"crime, law, trade, francis, taylor","big data, inferences, profiling, digital footprints",Policy / Law,"3. Policy, politics, smart city"
+24,"information, risk, security, management, event","big data, csa, security, big data analytics, classification",-,
+3,"market, economy, financial, price, competition","big data, artificial intelligence, financial markets, fintech, regulation",-,
+6,"target, profile, statistic, statistical, indicator","big data, energy efficiency, attention, automatic identification system, concept formation",-,
