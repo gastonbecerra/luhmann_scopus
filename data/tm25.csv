@@ -22,5 +22,5 @@ Topic,Top words from TM,Top keywords from 100 first papers,Topic label,Group
 20,"land, spatial, map, index, image","evapotranspiration, satellite data, big data, climate change, financial crisis",Climate,5. Social issues
 7,"crime, law, trade, francis, taylor","big data, inferences, profiling, digital footprints",Policy / Law,"3. Policy, politics, smart city"
 24,"information, risk, security, management, event","big data, csa, security, big data analytics, classification",-,
-3,"market, economy, financial, price, competition","big data, artificial intelligence, financial markets, fintech, regulation",-,
+3,"market, economy, financial, price, competition","big data, artificial intelligence, financial markets, fintech, regulation",Markets / Finance,4. Business and industry
 6,"target, profile, statistic, statistical, indicator","big data, energy efficiency, attention, automatic identification system, concept formation",-,

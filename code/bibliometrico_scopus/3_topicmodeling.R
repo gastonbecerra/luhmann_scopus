@@ -205,3 +205,19 @@ gamma_terms %>%
 
 # resultados interpretar --------------------
 
+glimpse(tm_25)
+
+topics <- tm_25 %>% group_by(Group) %>% summarise(t=paste(Topic, collapse = " , "))
+
+topics
+
+tm_gamma %>%
+  filter(topic %in% as.integer(str_split(
+    topics$t[3], 
+    pattern = ",", simplify = TRUE) %>% unlist(.))) %>%
+  left_join(metadata %>% 
+              filter(tag=="keyword") %>%
+              select(document=id, value)) %>%
+  top_n(1000, wt = gamma) %>%
+  select(-topic) %>%
+  count(value, sort = TRUE)

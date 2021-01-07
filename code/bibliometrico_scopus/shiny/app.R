@@ -104,9 +104,9 @@ server <- function(input, output, session) {
                 td_gamma %>%
                         filter(topic == as.integer(input$topic_selected)) %>%
                         left_join(articles %>% select(document=id, titulo, journal, year)) %>%
-                        top_n(10, wt = gamma) %>%
+                        top_n(15, wt = gamma) %>%
                         arrange(desc(gamma)) %>%
-                        select(-topic) 
+                        select(-topic,-document) 
         })
         
         output$keywordTable <- renderTable({
