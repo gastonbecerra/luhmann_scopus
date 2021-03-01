@@ -114,7 +114,7 @@ topic_model
 # ahora si, a darle atomos ------------
 
 
-abs_tm <- stm(abs_dfm, K = 25, verbose = TRUE, init.type = "Spectral",
+abs_tm <- stm(abs_dfm, K = 10, verbose = TRUE, init.type = "Spectral",
               data = abstracts %>% select(id,year), # covariamos con fecha
               prevalence=~year)
 
